@@ -4,15 +4,13 @@
 </template>
 
 <script>
-import HistoryList from './HistoryList.vue'
-import HistoryRemoveButton from './HistoryRemoveButton.vue'
+import HistoryList from './HistoryList.vue';
+import HistoryRemoveButton from './HistoryRemoveButton.vue';
 
 export default {
+  name: 'HistoryContainer',
   components: { HistoryList, HistoryRemoveButton },
-
-}
+};
 </script>
 
-<style>
-
-</style>
+<style scoped></style>
