@@ -1,5 +1,7 @@
 import KeyPad from '@/constants/KeyPad';
 
+import { toIntegerFormatWhenIntegerValue } from '@/store/modules/calculator/utils';
+
 const mutations = {
   pushStack(state, payload) {
     if (payload.nameTag === KeyPad.NUMBER.SELF) {
@@ -24,15 +26,5 @@ const mutations = {
     state.history.push(payload);
   },
 };
-
-function toIntegerFormatWhenIntegerValue(num) {
-  return isInteger(num) ? parseInt(num, 10).toString() : num;
-}
-
-function isInteger(num) {
-  const numStr = num.toString();
-  if (/^\d+\.0*$/.test(numStr)) return true;
-  return false;
-}
 
 export default mutations;

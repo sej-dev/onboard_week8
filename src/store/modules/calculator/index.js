@@ -9,8 +9,14 @@ const state = () => ({
 });
 
 const getters = {
-  formula: (state) => {
-    return state.stack.map((pad) => pad.content).join(' ');
+  formula(state) {
+    return state.stack.map((token) => token.content).join(' ');
+  },
+  history(state) {
+    return state.history.reverse().map(({ stack, number }) => ({
+      formula: stack.map((token) => token.content).join(' '),
+      result: number,
+    }));
   },
 };
 
