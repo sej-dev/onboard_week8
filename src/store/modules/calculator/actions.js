@@ -87,10 +87,14 @@ const actions = {
     }
   },
   handleNegate({ commit, state }, payload) {
-    //const { numberToken, OperatorToken } = payload;
-    const numberNegate = parseFloat(state.number) * -1;
-    state.number = numberNegate;
-    state.numberEditMode = 'append';
+    const { number } = state;
+
+    if (number === '0') return;
+
+    const numberNegate = toIntegerFormatWhenIntegerValue(parseFloat(number) * -1);
+
+    commit('changeNumberEditMode', 'append');
+    commit('setNumber', numberNegate);
   },
   handleDot({ commit, state }, payload) {
     const { numberEditMode } = state;
