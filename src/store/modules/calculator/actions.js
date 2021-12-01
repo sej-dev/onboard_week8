@@ -1,9 +1,10 @@
 import KeyPad from '@/constants/KeyPad';
+import { isOperator, toIntegerFormatWhenIntegerValue, isRationalNumber, calcNumOpNumSeq } from '@/store/modules/calculator/utils';
 
 const actions = {
   handleOperator({ commit, state }, payload) {
     const { numberToken, operatorToken } = payload;
-    const stack = state.stack;
+    const { stack, numberEditMode } = state;
 
     commit('changeNumberEditMode', 'replace');
 
@@ -15,10 +16,27 @@ const actions = {
       return;
     }
 
-    // case2: [num op]=result, (num, op) -> [result op num]
-    if (stack.length === 2 || stack.length === 4) {
+    // case2: [... op], (op) - replace
+    const lastIdx = stack.length - 1;
+    const top = stack[lastIdx];
+    if ((numberEditMode === 'replace' && isOperator(top.nameTag)) || (stack.length !== 4 && top.nameTag === KeyPad.EQUAL)) {
+      commit('popAndPushStack', operatorToken);
+      return;
+    }
+
+    // case3: [num op]=result, (num, op) -> [result op num]
+    if (stack.length === 2) {
       commit('pushStack', numberToken);
+      commit('pushStack', {
+        nameTag: KeyPad.EQUAL,
+        content: '&#61;',
+      });
+
       const result = calcNumOpNumSeq(stack.slice());
+      commit('addHistory', {
+        stack: stack.slice(),
+        number: result,
+      });
 
       commit('clearStack');
 
@@ -29,19 +47,25 @@ const actions = {
       commit('pushStack', operatorToken);
       commit('setNumber', toIntegerFormatWhenIntegerValue(result));
 
-      commit('addHistory', {
-        stack: stack.slice(),
-        number: state.number,
-      });
       return;
     }
 
-    // case3: [... op], (op) - replace
-    const lastIdx = stack.length - 1;
-    const top = stack[lastIdx];
-    if (isOperator(top.nameTag) || top.nameTag === KeyPad.EQUAL) {
-      commit('popAndPushStack', operatorToken);
-      return;
+    // case3-2: [num op num =]=result, (num, op) -> [result op num]
+    if (stack.length === 4) {
+      const result = calcNumOpNumSeq(stack.slice());
+      commit('addHistory', {
+        stack: stack.slice(),
+        number: result,
+      });
+
+      commit('clearStack');
+
+      commit('pushStack', {
+        nameTag: KeyPad.NUMBER.SELF,
+        content: result,
+      });
+      commit('pushStack', operatorToken);
+      commit('setNumber', toIntegerFormatWhenIntegerValue(result));
     }
   },
   handleEqual({ commit, state }, payload) {
@@ -54,6 +78,10 @@ const actions = {
       commit('pushStack', numberToken);
       commit('pushStack', operatorToken);
       commit('setNumber', toIntegerFormatWhenIntegerValue(numberToken.content));
+      commit('addHistory', {
+        stack: stack.slice(),
+        number: state.number,
+      });
       return;
     }
 
@@ -63,6 +91,11 @@ const actions = {
       const result = calcNumOpNumSeq(stack.slice());
       commit('pushStack', operatorToken);
       commit('setNumber', toIntegerFormatWhenIntegerValue(result));
+      commit('addHistory', {
+        stack: stack.slice(),
+        number: state.number,
+      });
+      debugger;
       return;
     }
 
@@ -73,6 +106,10 @@ const actions = {
       // case1과 유사: [num =], (num =)
       if (stack.length === 2) {
         commit('setNumber', toIntegerFormatWhenIntegerValue(stack[lastIdx - 1].content));
+        commit('addHistory', {
+          stack: stack.slice(),
+          number: state.number,
+        });
         return;
       }
 
@@ -82,6 +119,10 @@ const actions = {
         stack[0] = numberToken;
         const result = calcNumOpNumSeq(stack.slice());
         commit('setNumber', toIntegerFormatWhenIntegerValue(result));
+        commit('addHistory', {
+          stack: stack.slice(),
+          number: state.number,
+        });
         return;
       }
     }
@@ -157,49 +198,5 @@ const actions = {
     }
   },
 };
-
-function calcNumOpNumSeq(list) {
-  const [num1, operator, num2] = list;
-
-  const operation = getOperation(operator.nameTag);
-  const result = operation(parseFloat(num1.content), parseFloat(num2.content));
-
-  return result;
-}
-
-function getOperation(operator) {
-  switch (operator) {
-    case KeyPad.OPERATOR.SUM:
-      return (num1, num2) => num1 + num2;
-    case KeyPad.OPERATOR.SUBTRACT:
-      return (num1, num2) => num1 - num2;
-    case KeyPad.OPERATOR.MULTIPLY:
-      return (num1, num2) => num1 * num2;
-    case KeyPad.OPERATOR.DIVIDE:
-      return (num1, num2) => num1 / num2;
-    default:
-      return () => {};
-  }
-}
-function isOperator(namgTag) {
-  const operators = Object.keys(KeyPad.OPERATOR);
-  return operators.includes(namgTag);
-}
-
-function toIntegerFormatWhenIntegerValue(num) {
-  return isInteger(num) ? parseInt(num, 10).toString() : num;
-}
-
-function isInteger(num) {
-  const numStr = num.toString();
-  if (/^\d+\.0*$/.test(numStr)) return true;
-  return false;
-}
-
-function isRationalNumber(num) {
-  const numStr = num.toString();
-  if (/\./.test(numStr)) return true;
-  return false;
-}
 
 export default actions;
