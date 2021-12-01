@@ -1,24 +1,2 @@
-# week8
-
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### 8주차. 계산기 구현 (with Vue.js 3 + Composition API)
+!['계산기'](https://github.com/sej-dev/onboard_week8/blob/master/src/assets/image/test.png)
