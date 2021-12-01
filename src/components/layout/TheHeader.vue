@@ -1,5 +1,7 @@
 <template>
-  the-header
+  <header class="header"> 
+    계산기
+  </header>
 </template>
 
 <script>
@@ -8,6 +10,6 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
 </style>

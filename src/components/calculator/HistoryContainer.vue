@@ -8,12 +8,11 @@ import HistoryList from './HistoryList.vue'
 import HistoryRemoveButton from './HistoryRemoveButton.vue'
 
 export default {
-  components: { HistoryList },
+  components: { HistoryList, HistoryRemoveButton },
 
 }
 </script>
 
-    HistoryRemoveButton
 <style>
 
 </style>
