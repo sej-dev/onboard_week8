@@ -8,7 +8,7 @@
 <script>
 import HistoryList from '@/components/calculator/HistoryList.vue';
 import { useStore } from 'vuex';
-import { computed } from '@vue/reactivity';
+import { computed } from 'vue';
 
 export default {
   name: 'HistoryContainer',
@@ -28,7 +28,8 @@ export default {
 .history-container {
   background-color: rgba(17, 17, 17, 0.5);
   display: grid;
-  grid-template-rows: 1fr 50px;
+  grid-template-rows: minmax(0, 1fr) 50px;
+
   .empty {
     padding: 20px;
     font-weight: bold;

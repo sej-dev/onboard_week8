@@ -1,8 +1,8 @@
 <template>
   <section class="calcultor-container">
     <result-conatiner />
-    <input-pad />
-    <history-container :class="classObject" />
+    <input-pad v-show="!showHistory" />
+    <history-container v-show="showHistory" />
   </section>
 </template>
 
@@ -10,24 +10,25 @@
 import HistoryContainer from '@/components/calculator/HistoryContainer.vue';
 import InputPad from '@/components/calculator/InputPad.vue';
 import ResultConatiner from '@/components/calculator/ResultConatiner.vue';
-import { computed } from '@vue/reactivity';
+import { computed } from 'vue';
+import { useStore } from 'vuex';
 
 export default {
   components: { ResultConatiner, InputPad, HistoryContainer },
   name: 'CalculatorContainer',
+
   setup() {
+    const store = useStore();
     const showHistory = computed(() => store.state.calculator.css.showHistory);
+
     return {
       showHistory,
-      classObject: {
-        slideUp: showHistory,
-      },
     };
   },
 };
 </script>
 
-<style scoped lang="scss">
+<style scoped>
 .calcultor-container {
   display: grid;
   grid-template-rows: 1fr 2fr;

@@ -28,7 +28,7 @@ export default {
 
 <style scoped>
 .value {
-  font-size: 5rem;
+  font-size: 7vw;
   font-weight: bold;
 }
 </style>

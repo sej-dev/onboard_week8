@@ -1,5 +1,5 @@
 <template>
-  <img :src="iconSrc" alt="히스토리 삭제 버튼" class="history-remove-button" @click="onRemoveIconClick" />
+  <img :src="iconSrc" title="모든 기록 지우기" class="history-remove-button" @click="onRemoveIconClick" />
 </template>
 
 <script>

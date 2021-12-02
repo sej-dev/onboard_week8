@@ -9,7 +9,7 @@
 <script>
 import InputPadButton from '@/components/calculator/InputPadButton.vue';
 
-import { onMounted } from 'vue';
+import { onBeforeUnmount, onMounted } from 'vue';
 
 import usePadInput from '@/composables/usePadInput';
 
@@ -24,13 +24,18 @@ export default {
 
     // operator 또는 = 입력 시 토큰을 생성하고 vuex에 저장
     const onClickPad = (keypad) => handlePadInput(keypad);
+    const padInputHandler = ({ key }) => {
+      const keypad = Keyboard[key];
+      if (keypad) handlePadInput(keypad);
+    };
 
     onMounted(() => {
       // handle keydown event
-      document.addEventListener('keydown', ({ key }) => {
-        const keypad = Keyboard[key];
-        if (keypad) handlePadInput(keypad);
-      });
+      document.addEventListener('keydown', padInputHandler);
+    });
+
+    onBeforeUnmount(() => {
+      document.removeEventListener('keydown', padInputHandler);
     });
 
     return {

@@ -44,11 +44,4 @@ export default {
     width: 20px;
   }
 }
-@media screen and (min-width: 800px) {
-  .history {
-    visibility: hidden;
-  }
-}
-.slide-up {
-}
 </style>

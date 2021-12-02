@@ -2,23 +2,29 @@
   <ul class="history-list">
     <li v-for="history in histories" :key="history.formula" class="history-item">
       <div v-html="history.formula" class="formula"></div>
-      <div class="result">{{ history.result }}</div>
+      <div class="result">{{ addComma(history.result) }}</div>
     </li>
   </ul>
   <history-remove-button />
 </template>
 
 <script>
-import { computed } from '@vue/reactivity';
+import { computed } from 'vue';
 import { useStore } from 'vuex';
+import HistoryRemoveButton from '@/components/calculator/HistoryRemoveButton.vue';
+
+import { addComma } from '@/utils/calculator';
 
 export default {
+  components: { HistoryRemoveButton },
   name: 'HistoryList',
   setup() {
     const store = useStore();
     const histories = computed(() => store.getters['calculator/history']);
+
     return {
       histories,
+      addComma,
     };
   },
 };
@@ -27,19 +33,23 @@ export default {
 <style scoped lang="scss">
 .history-list {
   text-align: right;
+  padding: 10px;
+
+  overflow-y: auto;
+  max-height: inherit;
 
   .history-item {
-    margin: 20px;
+    margin: 20px 0 20px 0;
 
     .formula {
       color: #c7c7c7;
-      word-spacing: 0.8rem;
+      word-spacing: 0.8vw;
     }
 
     .result {
-      font-weight: bold;
-      font-size: 2rem;
-      margin-top: 1rem;
+      font-weight: 600;
+      font-size: 4vw;
+      margin-top: 2vh;
     }
   }
 }

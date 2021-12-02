@@ -144,7 +144,7 @@ const actions = {
 
     if (number === '0') return;
 
-    const numberNegate = toIntegerFormatWhenIntegerValue(parseFloat(number) * -1);
+    const numberNegate = number.startsWith('-') ? number.replace('-', '') : `-${number}`;
 
     commit('changeNumberEditMode', 'append');
     commit('setNumber', numberNegate);
