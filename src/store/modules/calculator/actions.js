@@ -1,5 +1,6 @@
-import KeyPad from '@/constants/KeyPad';
-import { isOperator, toIntegerFormatWhenIntegerValue, isRationalNumber, calcNumOpNumSeq } from '@/store/modules/calculator/utils';
+import Keypad from '@/constants/calculator/Keypad';
+import { toIntegerFormatWhenIntegerValue, isRationalNumber, calcNumOpNumSeq } from '@/store/modules/calculator/utils';
+import CalculatorToken from '@/class/CalculatorToken';
 
 const actions = {
   handleOperator({ commit, state }, payload) {
@@ -19,7 +20,7 @@ const actions = {
     // case2: [... op], (op) - replace
     const lastIdx = stack.length - 1;
     const top = stack[lastIdx];
-    if ((numberEditMode === 'replace' && isOperator(top.nameTag)) || (stack.length !== 4 && top.nameTag === KeyPad.EQUAL)) {
+    if ((numberEditMode === 'replace' && Keypad.OPERATOR.equalTo(top.parent)) || (stack.length === 2 && Keypad.EQUAL.equalTo(top.type))) {
       commit('popAndPushStack', operatorToken);
       return;
     }
@@ -28,7 +29,7 @@ const actions = {
     if (stack.length === 2) {
       commit('pushStack', numberToken);
       commit('pushStack', {
-        nameTag: KeyPad.EQUAL,
+        type: Keypad.EQUAL,
         content: '&#61;',
       });
 
@@ -40,10 +41,13 @@ const actions = {
 
       commit('clearStack');
 
-      commit('pushStack', {
-        nameTag: KeyPad.NUMBER.SELF,
-        content: result,
-      });
+      commit(
+        'pushStack',
+        new CalculatorToken({
+          type: Keypad.NUMBER,
+          content: result,
+        })
+      );
       commit('pushStack', operatorToken);
       commit('setNumber', toIntegerFormatWhenIntegerValue(result));
 
@@ -53,17 +57,16 @@ const actions = {
     // case3-2: [num op num =]=result, (num, op) -> [result op num]
     if (stack.length === 4) {
       const result = calcNumOpNumSeq(stack.slice());
-      commit('addHistory', {
-        stack: stack.slice(),
-        number: result,
-      });
 
       commit('clearStack');
 
-      commit('pushStack', {
-        nameTag: KeyPad.NUMBER.SELF,
-        content: result,
-      });
+      commit(
+        'pushStack',
+        new CalculatorToken({
+          type: Keypad.NUMBER,
+          content: result,
+        })
+      );
       commit('pushStack', operatorToken);
       commit('setNumber', toIntegerFormatWhenIntegerValue(result));
     }
@@ -95,14 +98,14 @@ const actions = {
         stack: stack.slice(),
         number: state.number,
       });
-      debugger;
+
       return;
     }
 
     // case3: [... =], (num =)
     const lastIdx = stack.length - 1;
     const top = stack[lastIdx];
-    if (top.nameTag === KeyPad.EQUAL) {
+    if (top.type === Keypad.EQUAL) {
       // case1과 유사: [num =], (num =)
       if (stack.length === 2) {
         commit('setNumber', toIntegerFormatWhenIntegerValue(stack[lastIdx - 1].content));
@@ -152,17 +155,17 @@ const actions = {
     }
   },
   handleClear({ commit, state }, payload) {
-    const token = payload.token;
-    switch (token.nameTag) {
-      case KeyPad.CLEAR.ALL:
+    const token = payload;
+    switch (token.type) {
+      case Keypad.CLEAR_ALL:
         commit('clearStack');
         commit('setNumber', '0');
         return;
-      case KeyPad.CLEAR.ENTRY:
+      case Keypad.CLEAR_ENTRY:
         commit('setNumber', '0');
         commit('changeNumberEditMode', 'replace');
         return;
-      case KeyPad.CLEAR.ONE_CHAR:
+      case Keypad.CLEAR_ONE_CHAR:
         const { numberEditMode, number, stack } = state;
 
         if (numberEditMode === 'append') {
@@ -179,14 +182,14 @@ const actions = {
 
         const lastIdx = stack.length - 1;
         const top = stack[lastIdx];
-        if (top && top.nameTag === KeyPad.EQUAL) {
+        if (top && Keypad.EQUAL.equalTo(top.type)) {
           commit('clearStack');
           return;
         }
     }
   },
   combineDigit({ commit, state }, payload) {
-    const { digit } = payload;
+    const { content: digit } = payload;
     const { numberEditMode } = state;
 
     // TODO: toggleNumberEditMode로 분리

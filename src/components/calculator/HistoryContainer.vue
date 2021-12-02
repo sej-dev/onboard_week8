@@ -4,8 +4,8 @@
 </template>
 
 <script>
-import HistoryList from './HistoryList.vue';
-import HistoryRemoveButton from './HistoryRemoveButton.vue';
+import HistoryList from '@/components/calculator/HistoryList.vue';
+import HistoryRemoveButton from '@/components/calculator/HistoryRemoveButton.vue';
 
 export default {
   name: 'HistoryContainer',

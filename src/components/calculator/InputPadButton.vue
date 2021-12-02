@@ -1,29 +1,32 @@
 <template>
-  <button
-    v-html="props.content"
-    class="input-pad-button"
-    :style="props.style"
-    @click="onClick"
-  ></button>
+  <button v-html="props.keypad.html" class="input-pad-button" :style="props.style" @click="onClick"></button>
 </template>
 
 <script>
+import KeypadEnum from '@/class/KeypadEnum';
+
 export default {
   name: 'InputPadButton',
   props: {
-    nameTag: String, // keypad 상수
-    content: [String, Image], // 화면에 표시할 값
-    style: Object,
+    keypad: {
+      required: true,
+      validator(object) {
+        return object instanceof KeypadEnum;
+      },
+    },
+    style: {
+      type: Object,
+      default() {
+        return {};
+      },
+    },
   },
   emits: {
     click: null,
   },
   setup(props, context) {
     const onClick = () => {
-      context.emit('click-pad', {
-        nameTag: props.nameTag,
-        content: props.content,
-      });
+      context.emit('click-pad', props.keypad);
     };
 
     return {

@@ -1,10 +1,10 @@
-import KeyPad from '@/constants/KeyPad';
+import Keypad from '@/constants/calculator/Keypad';
 
 import { toIntegerFormatWhenIntegerValue } from '@/store/modules/calculator/utils';
 
 const mutations = {
   pushStack(state, payload) {
-    if (payload.nameTag === KeyPad.NUMBER.SELF) {
+    if (payload.type.parent === Keypad.NUMBER) {
       payload.content = toIntegerFormatWhenIntegerValue(payload.content);
     }
     state.stack.push(payload);

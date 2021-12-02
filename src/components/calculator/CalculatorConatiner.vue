@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section class="calculator">
     <result-conatiner />
     <input-pad />
     <history-container />
@@ -7,9 +7,9 @@
 </template>
 
 <script>
-import HistoryContainer from './HistoryContainer.vue';
-import InputPad from './InputPad.vue';
-import ResultConatiner from './ResultConatiner.vue';
+import HistoryContainer from '@/components/calculator/HistoryContainer.vue';
+import InputPad from '@/components/calculator/InputPad.vue';
+import ResultConatiner from '@/components/calculator/ResultConatiner.vue';
 
 export default {
   components: { ResultConatiner, InputPad, HistoryContainer },
@@ -17,4 +17,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.calculator {
+  font-size: 16px;
+}
+</style>
