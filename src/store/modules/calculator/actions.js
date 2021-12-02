@@ -1,6 +1,7 @@
 import Keypad from '@/constants/calculator/Keypad';
 import { toIntegerFormatWhenIntegerValue, isRationalNumber, calcNumOpNumSeq } from '@/store/modules/calculator/utils';
-import CalculatorToken from '@/class/CalculatorToken';
+import CalculatorToken from '@/class/calculator/CalculatorToken';
+import ArithmeticError from '@/constants/calculator/ArithmeticError';
 
 const actions = {
   handleOperator({ commit, state }, payload) {
@@ -20,7 +21,7 @@ const actions = {
     // case2: [... op], (op) - replace
     const lastIdx = stack.length - 1;
     const top = stack[lastIdx];
-    if ((numberEditMode === 'replace' && Keypad.OPERATOR.equalTo(top.parent)) || (stack.length === 2 && Keypad.EQUAL.equalTo(top.type))) {
+    if ((numberEditMode === 'replace' && Keypad.OPERATOR.equalTo(top.type.parent)) || (stack.length === 2 && Keypad.EQUAL.equalTo(top.type))) {
       commit('popAndPushStack', operatorToken);
       return;
     }
@@ -75,6 +76,9 @@ const actions = {
     const { numberToken, operatorToken } = payload;
     const stack = state.stack;
 
+    const lastIdx = stack.length - 1;
+    const top = stack[lastIdx];
+
     commit('changeNumberEditMode', 'replace');
     // case1: [], (num =)
     if (stack.length === 0) {
@@ -90,6 +94,14 @@ const actions = {
 
     // case2: [num op], (num =)
     if (stack.length === 2) {
+      // 0으로 나눌 경우 오류 처리
+      if (numberToken.content === '0' && Keypad.DIVIDE.equalTo(top.type)) {
+        commit('setError', ArithmeticError.DIVIDE_BY_ZERO);
+        commit('clearStack');
+        commit('changeNumberEditMode', 'replace');
+        return;
+      }
+
       commit('pushStack', numberToken);
       const result = calcNumOpNumSeq(stack.slice());
       commit('pushStack', operatorToken);
@@ -103,8 +115,6 @@ const actions = {
     }
 
     // case3: [... =], (num =)
-    const lastIdx = stack.length - 1;
-    const top = stack[lastIdx];
     if (top.type === Keypad.EQUAL) {
       // case1과 유사: [num =], (num =)
       if (stack.length === 2) {
@@ -184,13 +194,14 @@ const actions = {
         const top = stack[lastIdx];
         if (top && Keypad.EQUAL.equalTo(top.type)) {
           commit('clearStack');
+
           return;
         }
     }
   },
   combineDigit({ commit, state }, payload) {
     const { content: digit } = payload;
-    const { numberEditMode } = state;
+    const { numberEditMode, error } = state;
 
     // TODO: toggleNumberEditMode로 분리
     if (numberEditMode === 'replace') {

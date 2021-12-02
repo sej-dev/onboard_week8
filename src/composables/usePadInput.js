@@ -2,13 +2,18 @@ import { computed } from 'vue';
 import { useStore } from 'vuex';
 
 import Keypad from '@/constants/calculator/Keypad';
-import CalculatorToken from '@/class/CalculatorToken';
+import CalculatorToken from '@/class/calculator/CalculatorToken';
 
 function usePadInput() {
   const store = useStore();
   const number = computed(() => store.state.calculator.number);
+  const arithmeticError = computed(() => store.state.calculator.error);
 
   const handlePadInput = (padInput) => {
+    if (arithmeticError.value.hasError) {
+      store.commit('calculator/unsetError');
+    }
+
     // 숫자
     if (Keypad.NUMBER.equalTo(padInput.parent)) {
       store.dispatch(

@@ -3,6 +3,7 @@ import Keypad from '@/constants/calculator/Keypad';
 import { toIntegerFormatWhenIntegerValue } from '@/store/modules/calculator/utils';
 
 const mutations = {
+  // actions 내부에서만 쓰이는 mutation
   pushStack(state, payload) {
     if (payload.type.parent === Keypad.NUMBER) {
       payload.content = toIntegerFormatWhenIntegerValue(payload.content);
@@ -24,6 +25,25 @@ const mutations = {
   },
   addHistory(state, payload) {
     state.history.push(payload);
+  },
+
+  setError(state, payload) {
+    state.error.hasError = true;
+    state.error.code = payload;
+  },
+  unsetError(state) {
+    state.error.hasError = false;
+    state.error.code = null;
+  },
+
+  // 컴포넌트에서 사용하는 mutation
+  clearHistories(state) {
+    state.history = [];
+  },
+
+  // css state 변경하는 mutation
+  toggleHistoryList(state) {
+    state.css.showHistory = !state.css.showHistory;
   },
 };
 
