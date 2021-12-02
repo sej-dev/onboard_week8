@@ -1,9 +1,16 @@
 <template>
-  <button v-html="props.keypad.html" class="input-pad-button" :style="props.style" @click="onClick"></button>
+  <template v-if="props.keypad.img">
+    <button class="input-pad-button" :style="props.style" @click="onClick">
+      <img class="icon" :src="props.keypad.img" />
+    </button>
+  </template>
+  <template v-else>
+    <button v-html="props.keypad.html" class="input-pad-button" :style="props.style" @click="onClick"></button>
+  </template>
 </template>
 
 <script>
-import KeypadEnum from '@/class/KeypadEnum';
+import KeypadEnum from '@/class/calculator/KeypadEnum';
 
 export default {
   name: 'InputPadButton',
@@ -38,11 +45,15 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .input-pad-button {
   width: 100%;
   font-size: 1.5rem;
   text-align: center;
   color: #f4f4f4;
+
+  .icon {
+    width: 1.5rem;
+  }
 }
 </style>
