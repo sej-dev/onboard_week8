@@ -1,5 +1,5 @@
 <template>
-  <div class="result">
+  <div class="result-container">
     <img class="history" :src="historyIcon" alt="이전 기록 아이콘" />
     <result-formula />
     <result-value />
@@ -24,10 +24,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.result {
+.result-container {
   text-align: right;
+  padding: 10px;
+  display: grid;
+  grid-template-rows: 1fr 2fr 4fr;
 
   .history {
+    margin-left: auto;
     width: 20px;
   }
 }

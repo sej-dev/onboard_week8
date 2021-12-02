@@ -4,23 +4,26 @@
 </template>
 
 <script>
-import CalculatorConatiner from './components/calculator/CalculatorConatiner.vue'
-import TheHeader from './components/layout/TheHeader.vue'
+import CalculatorConatiner from './components/calculator/CalculatorConatiner.vue';
+import TheHeader from './components/layout/TheHeader.vue';
 
-import test from "@/assets/image/test.png";
+import test from '@/assets/image/test.png';
 
 export default {
   name: 'App',
   components: {
-    TheHeader, CalculatorConatiner
+    TheHeader,
+    CalculatorConatiner,
   },
-}
+};
 </script>
 
 <style>
-  #app{
-    color: #f4f4f4;
-    background-color: #555555;
-    padding: 10px;
-  }
+#app {
+  color: #f4f4f4;
+  background-color: #555555;
+  height: 100%;
+  display: grid;
+  grid-template-rows: 50px 1fr;
+}
 </style>

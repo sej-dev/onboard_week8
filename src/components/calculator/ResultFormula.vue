@@ -1,7 +1,5 @@
 <template>
-  <div class="formula">
-    <span v-html="formula" />
-  </div>
+  <div class="result-formula" v-html="formula"></div>
 </template>
 
 <script>
@@ -22,7 +20,9 @@ export default {
 </script>
 
 <style scoped>
-.formula {
-  height: 40px;
+.result-formula {
+  font-size: 1.25rem;
+  height: 100%;
+  line-height: 100%;
 }
 </style>

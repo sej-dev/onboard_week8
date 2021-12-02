@@ -40,10 +40,9 @@ export default {
 
 <style scoped>
 .input-pad-button {
-  width: 25%;
-  font-size: 40px;
+  width: 100%;
+  font-size: 1.5rem;
   text-align: center;
-  margin: 2px;
   color: #f4f4f4;
 }
 </style>

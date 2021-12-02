@@ -1,8 +1,8 @@
 <template>
-  <section class="calculator">
+  <section class="calcultor-container">
     <result-conatiner />
     <input-pad />
-    <history-container />
+    <history-container v-if="false" />
   </section>
 </template>
 
@@ -17,8 +17,10 @@ export default {
 };
 </script>
 
-<style>
-.calculator {
-  font-size: 16px;
+<style scoped>
+.calcultor-container {
+  display: grid;
+  grid-template-rows: 1fr 2fr;
+  padding: 5px;
 }
 </style>

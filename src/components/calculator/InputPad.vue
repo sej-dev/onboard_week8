@@ -1,7 +1,7 @@
 <template>
   <div class="input-pad">
     <div class="input-pad-row" v-for="row in buttons" :key="row[0].key">
-      <input-pad-button v-for="button in row" :key="button.type.name" v-bind="button" @click-pad="onClickPad" />
+      <input-pad-button v-for="button in row" :key="button.keypad.type" v-bind="button" @click-pad="onClickPad" />
     </div>
   </div>
 </template>
@@ -69,9 +69,16 @@ const buttons = [
 ];
 </script>
 
-<style scoped>
-.input-pad-row {
-  display: flex;
-  justify-content: space-between;
+<style scoped lang="scss">
+.input-pad {
+  display: grid;
+  grid-template-rows: repeat(6, 1fr);
+  grid-row-gap: 3px;
+
+  .input-pad-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-column-gap: 3px;
+  }
 }
 </style>
