@@ -6,6 +6,13 @@ const state = () => ({
   number: '0',
   numberEditMode: 'replace', // [ replace, append ],
   history: [], // [ { stack: [], number } ]
+  error: {
+    hasError: false,
+    code: null,
+  },
+  css: {
+    showHistory: false,
+  },
 });
 
 const getters = {
