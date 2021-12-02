@@ -3,10 +3,12 @@ import { useStore } from 'vuex';
 
 import Keypad from '@/constants/calculator/Keypad';
 import CalculatorToken from '@/class/calculator/CalculatorToken';
+import { isLengthExceeded } from '@/utils/calculator';
 
 function usePadInput() {
   const store = useStore();
   const number = computed(() => store.state.calculator.number);
+  const numberEditMode = computed(() => store.state.calculator.numberEditMode);
   const arithmeticError = computed(() => store.state.calculator.error);
 
   const handlePadInput = (padInput) => {
@@ -16,6 +18,8 @@ function usePadInput() {
 
     // 숫자
     if (Keypad.NUMBER.equalTo(padInput.parent)) {
+      if (numberEditMode.value === 'append' && isLengthExceeded(number.value + padInput.html)) return;
+
       store.dispatch(
         'calculator/combineDigit',
         new CalculatorToken({

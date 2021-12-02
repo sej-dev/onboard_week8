@@ -1,6 +1,6 @@
 <template>
   <div class="result-container">
-    <img class="history" :src="historyIcon" alt="이전 기록 아이콘" />
+    <img class="history" :src="historyIcon" alt="이전 기록 아이콘" @click="onHistoryBtnClick" />
     <result-formula />
     <result-value />
   </div>
@@ -11,13 +11,22 @@ import ResultFormula from '@/components/calculator/ResultFormula.vue';
 import ResultValue from '@/components/calculator/ResultValue.vue';
 
 import HistoryIcon from '@/assets/icon/history_50.png';
+import { useStore } from 'vuex';
 
 export default {
   components: { ResultFormula, ResultValue },
   name: 'ResultContainer',
+
   setup() {
+    const store = useStore();
+    const onHistoryBtnClick = () => {
+      store.commit('calculator/toggleHistoryList');
+    };
+
     return {
       historyIcon: HistoryIcon,
+
+      onHistoryBtnClick,
     };
   },
 };
@@ -34,5 +43,12 @@ export default {
     margin-left: auto;
     width: 20px;
   }
+}
+@media screen and (min-width: 800px) {
+  .history {
+    visibility: hidden;
+  }
+}
+.slide-up {
 }
 </style>

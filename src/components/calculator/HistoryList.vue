@@ -1,11 +1,11 @@
 <template>
-  <p v-if="histories.length === 0">아직 기록이 없음</p>
-  <ul v-else>
-    <li v-for="history in histories" :key="history.formula">
-      <div v-html="history.formula"></div>
-      <div>{{ history.result }}</div>
+  <ul class="history-list">
+    <li v-for="history in histories" :key="history.formula" class="history-item">
+      <div v-html="history.formula" class="formula"></div>
+      <div class="result">{{ history.result }}</div>
     </li>
   </ul>
+  <history-remove-button />
 </template>
 
 <script>
@@ -24,4 +24,23 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped lang="scss">
+.history-list {
+  text-align: right;
+
+  .history-item {
+    margin: 20px;
+
+    .formula {
+      color: #c7c7c7;
+      word-spacing: 0.8rem;
+    }
+
+    .result {
+      font-weight: bold;
+      font-size: 2rem;
+      margin-top: 1rem;
+    }
+  }
+}
+</style>

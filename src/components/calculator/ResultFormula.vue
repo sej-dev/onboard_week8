@@ -22,6 +22,8 @@ export default {
 <style scoped>
 .result-formula {
   font-size: 1.25rem;
+  color: #c7c7c7;
+  font-weight: 100;
   height: 100%;
   line-height: 100%;
 }

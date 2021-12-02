@@ -8,6 +8,7 @@ export default class KeypadEnum {
 
   equalTo(anotherKeypadEnum) {
     if (!anotherKeypadEnum) return false;
+
     return anotherKeypadEnum.name === this.name;
   }
 }

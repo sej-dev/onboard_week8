@@ -1,5 +1,5 @@
 import Keypad from '@/constants/calculator/Keypad';
-import { toIntegerFormatWhenIntegerValue, isRationalNumber, calcNumOpNumSeq } from '@/store/modules/calculator/utils';
+import { toIntegerFormatWhenIntegerValue, isRationalDiffIntegerNumber, calcNumOpNumSeq } from '@/store/modules/calculator/utils';
 import CalculatorToken from '@/class/calculator/CalculatorToken';
 import ArithmeticError from '@/constants/calculator/ArithmeticError';
 
@@ -91,31 +91,8 @@ const actions = {
       });
       return;
     }
-
-    // case2: [num op], (num =)
-    if (stack.length === 2) {
-      // 0으로 나눌 경우 오류 처리
-      if (numberToken.content === '0' && Keypad.DIVIDE.equalTo(top.type)) {
-        commit('setError', ArithmeticError.DIVIDE_BY_ZERO);
-        commit('clearStack');
-        commit('changeNumberEditMode', 'replace');
-        return;
-      }
-
-      commit('pushStack', numberToken);
-      const result = calcNumOpNumSeq(stack.slice());
-      commit('pushStack', operatorToken);
-      commit('setNumber', toIntegerFormatWhenIntegerValue(result));
-      commit('addHistory', {
-        stack: stack.slice(),
-        number: state.number,
-      });
-
-      return;
-    }
-
     // case3: [... =], (num =)
-    if (top.type === Keypad.EQUAL) {
+    if (Keypad.EQUAL.equalTo(top.type)) {
       // case1과 유사: [num =], (num =)
       if (stack.length === 2) {
         commit('setNumber', toIntegerFormatWhenIntegerValue(stack[lastIdx - 1].content));
@@ -139,6 +116,28 @@ const actions = {
         return;
       }
     }
+
+    // case2: [num op], (num =)
+    if (stack.length === 2) {
+      // 0으로 나눌 경우 오류 처리
+      if (numberToken.content === '0' && Keypad.DIVIDE.equalTo(top.type)) {
+        commit('setError', ArithmeticError.DIVIDE_BY_ZERO);
+        commit('clearStack');
+        commit('changeNumberEditMode', 'replace');
+        return;
+      }
+
+      commit('pushStack', numberToken);
+      const result = calcNumOpNumSeq(stack.slice());
+      commit('pushStack', operatorToken);
+      commit('setNumber', toIntegerFormatWhenIntegerValue(result));
+      commit('addHistory', {
+        stack: stack.slice(),
+        number: state.number,
+      });
+
+      return;
+    }
   },
   handleNegate({ commit, state }, payload) {
     const { number } = state;
@@ -160,16 +159,22 @@ const actions = {
     }
 
     const { numberToken } = payload;
-    if (!isRationalNumber(numberToken.content)) {
+    if (!isRationalDiffIntegerNumber(numberToken.content)) {
       commit('setNumber', `${numberToken.content}.`);
     }
   },
   handleClear({ commit, state }, payload) {
     const token = payload;
+
+    const { stack } = state;
+    const lastIdx = stack.length - 1;
+    const top = stack[lastIdx];
+
     switch (token.type) {
       case Keypad.CLEAR_ALL:
         commit('clearStack');
         commit('setNumber', '0');
+        commit('changeNumberEditMode', 'replace');
         return;
       case Keypad.CLEAR_ENTRY:
         commit('setNumber', '0');
@@ -181,7 +186,7 @@ const actions = {
         if (numberEditMode === 'append') {
           let nextNumber = null;
           if (number.length === 1) {
-            nextNumber = 0;
+            nextNumber = '0';
             commit('changeNumberEditMode', 'replace');
           } else {
             nextNumber = number.substring(0, number.length - 1);
@@ -201,10 +206,17 @@ const actions = {
   },
   combineDigit({ commit, state }, payload) {
     const { content: digit } = payload;
-    const { numberEditMode, error } = state;
+    const { numberEditMode, stack } = state;
 
     // TODO: toggleNumberEditMode로 분리
     if (numberEditMode === 'replace') {
+      const lastIdx = stack.length - 1;
+      const top = stack[lastIdx];
+
+      if (top && Keypad.EQUAL.equalTo(top.type)) {
+        commit('clearStack');
+      }
+
       commit('setNumber', digit);
       commit('changeNumberEditMode', 'append');
     } else if (numberEditMode === 'append') {
