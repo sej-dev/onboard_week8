@@ -9,7 +9,7 @@
         v-for="button in row"
         :key="button.keypad.type"
         v-bind="button"
-        @click-pad="onClickPad"
+        @click-keypad="onClickKeypad"
       />
     </div>
   </div>
@@ -24,7 +24,7 @@ import usePadInput from '@/composables/usePadInput';
 
 import Keypad from '@/constants/calculator/Keypad';
 import Keyboard from '@/constants/calculator/Keyboard';
-import calculatorColor from '@/constants/color/calculator';
+import CalculatorColors from '@/constants/color/CalculatorColors';
 
 export default {
   name: 'InputPad',
@@ -33,7 +33,7 @@ export default {
     const { handlePadInput } = usePadInput();
 
     // operator 또는 = 입력 시 토큰을 생성하고 vuex에 저장
-    const onClickPad = (keypad) => handlePadInput(keypad);
+    const onClickKeypad = (keypad) => handlePadInput(keypad);
 
     const onKeydown = ({ key }) => {
       const keypad = Keyboard[key];
@@ -52,7 +52,7 @@ export default {
     return {
       buttons,
 
-      onClickPad,
+      onClickKeypad,
     };
   },
 };
@@ -64,9 +64,9 @@ function makeProps(keypad, style) {
   };
 }
 
-const midGrey = { backgroundColor: calculatorColor.keypad.midGrey };
-const darkGrey = { backgroundColor: calculatorColor.keypad.darkGrey };
-const midBlue = { backgroundColor: calculatorColor.keypad.midBlue };
+const midGrey = { backgroundColor: CalculatorColors.keypad.midGrey };
+const darkGrey = { backgroundColor: CalculatorColors.keypad.darkGrey };
+const midBlue = { backgroundColor: CalculatorColors.keypad.midBlue };
 
 const buttons = [
   [

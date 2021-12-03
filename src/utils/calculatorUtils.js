@@ -1,9 +1,10 @@
-import CalculatorCondition from '@/constants/calculator/Condition';
+import CalculatorCondition from '@/constants/calculator/CalculatorCondition';
 import { isInteger, isRationalDiffIntegerNumber } from '@/store/modules/calculator/utils';
 
 import Big from 'big.js';
 import Keypad from '@/constants/calculator/Keypad';
 
+// 화면 표시 최대 길이 초과 여부 
 export function isLengthExceeded(numStr) {
   const absNumStr = numStr.replace('-', '');
 
@@ -18,10 +19,12 @@ export function isLengthExceeded(numStr) {
   return false;
 }
 
+// 지수 표기법으로
 export function toExponentialExpr(numStr){
   return Big(numStr).toExponential(CalculatorCondition.DECIMAL_POINT_BELOW_LEN_LIMIT);
 }
 
+// 숫자에 콤마 추가
 export function addComma(numStr) {
   if (isLengthExceeded(numStr)) return toExponentialExpr(numStr);
 

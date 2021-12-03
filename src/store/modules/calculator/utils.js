@@ -1,5 +1,5 @@
 import Keypad from '@/constants/calculator/Keypad';
-import { toExponentialExpr, isLengthExceeded } from '@/utils/calculator';
+import { toExponentialExpr, isLengthExceeded } from '@/utils/calculatorUtils';
 import Big from 'big.js';
 
 // ex. 01 -> 1 

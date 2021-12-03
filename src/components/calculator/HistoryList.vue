@@ -22,9 +22,9 @@ import { computed } from 'vue';
 import { useStore } from 'vuex';
 import HistoryRemoveButton from '@/components/calculator/HistoryRemoveButton.vue';
 
-import { addComma } from '@/utils/calculator';
+import { addComma } from '@/utils/calculatorUtils';
 
-import calculatorColor from "@/constants/color/calculator";
+import CalculatorColors from "@/constants/color/CalculatorColors";
 
 export default {
   name: 'HistoryList',
@@ -35,7 +35,7 @@ export default {
 
     return {
       histories,
-      color: calculatorColor,
+      color: CalculatorColors,
       addComma,
     };
   },

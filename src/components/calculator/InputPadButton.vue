@@ -15,7 +15,7 @@
     <button
       class="input-pad-button"
       :style="props.style"
-      @click="onClick"
+      @click="onKeypadClick"
       v-html="props.keypad.html"
     />
   </template>
@@ -23,7 +23,7 @@
 
 <script>
 import KeypadEnum from '@/class/calculator/KeypadEnum';
-import calculatorColor from '@/constants/color/calculator';
+import CalculatorColors from '@/constants/color/CalculatorColors';
 
 export default {
   name: 'InputPadButton',
@@ -42,14 +42,14 @@ export default {
     },
   },
   setup(props, context) {
-    const onClick = () => {
-      context.emit('click-pad', props.keypad);
+    const onKeypadClick = () => {
+      context.emit('click-keypad', props.keypad);
     };
 
     return {
       props,
-      color: calculatorColor,
-      onClick,
+      color: CalculatorColors,
+      onKeypadClick,
     };
   },
 };

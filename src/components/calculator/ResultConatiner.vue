@@ -27,7 +27,7 @@ export default {
   setup() {
     const store = useStore();
     const onHistoryBtnClick = () => {
-      store.commit('calculator/toggleHistoryList');
+      store.commit('calculator/toggleHistoryListView');
     };
 
     return {

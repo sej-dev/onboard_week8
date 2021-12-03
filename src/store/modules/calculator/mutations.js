@@ -46,7 +46,7 @@ const mutations = {
   },
 
   // css state 변경하는 mutation
-  toggleHistoryList(state) {
+  toggleHistoryListView(state) {
     state.css.showHistory = !state.css.showHistory;
   },
 };

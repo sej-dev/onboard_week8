@@ -17,7 +17,7 @@
 import HistoryList from '@/components/calculator/HistoryList.vue';
 import { useStore } from 'vuex';
 import { computed } from 'vue';
-import calculatorColor from '@/constants/color/calculator';
+import CalculatorColors from '@/constants/color/CalculatorColors';
 
 export default {
   name: 'HistoryContainer',
@@ -28,7 +28,7 @@ export default {
 
     return {
       hasHistory,
-      color: calculatorColor,
+      color: CalculatorColors,
     };
   },
 };

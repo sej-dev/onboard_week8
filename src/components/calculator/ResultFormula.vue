@@ -6,7 +6,7 @@
 import { computed } from 'vue';
 import { useStore } from 'vuex';
 
-import calculatorColor from '@/constants/color/calculator';
+import CalculatorColors from '@/constants/color/CalculatorColors';
 
 export default {
   name: 'ResultFormula',
@@ -16,7 +16,7 @@ export default {
 
     return {
       formula,
-      color: calculatorColor,
+      color: CalculatorColors,
     };
   },
 };

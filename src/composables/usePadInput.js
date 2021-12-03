@@ -3,7 +3,7 @@ import { useStore } from 'vuex';
 
 import Keypad from '@/constants/calculator/Keypad';
 import CalculatorToken from '@/class/calculator/CalculatorToken';
-import { isLengthExceeded } from '@/utils/calculator';
+import { isLengthExceeded } from '@/utils/calculatorUtils';
 
 function usePadInput() {
   const store = useStore();
