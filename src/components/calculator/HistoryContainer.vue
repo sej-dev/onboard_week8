@@ -5,7 +5,7 @@
   >
     <p
       v-if="hasHistory === false"
-      class="empty"
+      class="history-empty"
     >
       아직 기록이 없음
     </p>
@@ -37,12 +37,11 @@ export default {
 <style scoped lang="scss">
 .history-container {
   background-color: rgba(17, 17, 17, 0.5);
-  display: grid;
-  grid-template-rows: minmax(0, 1fr) 50px;
-  overflow: auto;
 
-  .empty {
+  height: 70%;
+  .history-empty {
     padding: 20px;
+    font-size: 2vmin;
     font-weight: bold;
   }
 }

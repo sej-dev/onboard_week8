@@ -1,11 +1,13 @@
 <template>
   <div class="result-container">
-    <img
-      class="history"
-      :src="historyIcon"
-      alt="이전 기록 아이콘"
-      @click="onHistoryBtnClick"
-    >
+    <div>
+      <img
+        class="history-icon"
+        :src="historyIcon"
+        alt="이전 기록 아이콘"
+        @click="onHistoryBtnClick"
+      >
+    </div>
     <result-formula />
     <result-value />
   </div>
@@ -39,14 +41,15 @@ export default {
 
 <style lang="scss" scoped>
 .result-container {
+  height: 30%;
+  padding-right: 20px;
   text-align: right;
-  padding: 10px;
-  display: grid;
-  grid-template-rows: 1fr 2fr 4fr;
 
-  .history {
-    margin-left: auto;
-    width: 20px;
+  display: flex;
+  flex-direction: column;
+  
+  .history-icon {
+    width: 30px;
   }
 }
 </style>

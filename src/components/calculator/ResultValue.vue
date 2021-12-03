@@ -1,5 +1,5 @@
 <template>
-  <div class="value">
+  <div class="result-value">
     {{ arithmeticError.hasError ? arithmeticError.code.userMsg : addComma(number) }}
   </div>
 </template>
@@ -27,8 +27,14 @@ export default {
 </script>
 
 <style scoped>
-.value {
-  font-size: 7vw;
+.result-value {
+  flex-grow: 2;
+  
+  display: flex;
+  justify-content: end;
+  align-items: center;
+
+  font-size: 7vmin;
   font-weight: bold;
 }
 </style>

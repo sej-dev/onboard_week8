@@ -10,7 +10,8 @@ export default {
 
 <style scoped>
 .header {
-  padding: 10px;
-  height: 10%;
+  height: 50px;
+  line-height: 50px;
+  padding-left: 10px;
 }
 </style>

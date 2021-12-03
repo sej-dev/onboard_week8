@@ -1,9 +1,9 @@
 <template>
-  <section class="calcultor-container">
+  <div class="calcultor-container">
     <result-conatiner />
     <input-pad v-show="!showHistory" />
     <history-container v-show="showHistory" />
-  </section>
+  </div>
 </template>
 
 <script>
@@ -30,8 +30,6 @@ export default {
 
 <style scoped>
 .calcultor-container {
-  display: grid;
-  grid-template-rows: 1fr 2fr;
-  padding: 5px;
+  height: calc(100% - 50px);
 }
 </style>

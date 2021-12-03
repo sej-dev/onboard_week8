@@ -59,13 +59,13 @@ export default {
 
 <style scoped lang="scss">
 .input-pad-button {
-  width: 100%;
-  font-size: 1.5rem;
+
+  font-size: 4vmin;
   text-align: center;
   color: #f4f4f4;
 
   .icon {
-    width: 1.5rem;
+    width: 4vmin;
   }
 }
 </style>

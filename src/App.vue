@@ -21,7 +21,7 @@ export default {
   color: #f4f4f4;
   background-color: #555555;
   height: 100%;
-  display: grid;
-  grid-template-rows: 50px 1fr;
+  /* display: grid;
+  grid-template-rows: 50px 1fr; */
 }
 </style>

@@ -42,23 +42,22 @@ export default {
 <style scoped lang="scss">
 .history-list {
   text-align: right;
-  padding: 10px;
 
   overflow-y: auto;
-  max-height: inherit;
+  height: calc(100% - 70px);
 
   .history-item {
-    margin: 20px 0 20px 0;
+    padding: 20px;
 
     .formula {
       color: #c7c7c7;
-      word-spacing: 0.8vw;
+      word-spacing: 0.8vmin;
     }
 
     .result {
       font-weight: 600;
-      font-size: 4vw;
-      margin-top: 2vh;
+      font-size: 3vmin;
+      margin-top: 15px;
     }
   }
 }

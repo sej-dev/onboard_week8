@@ -63,12 +63,10 @@ function makeProps(keypad, style) {
   };
 }
 
-// TODO: 에러 있을 경우 숫자 제외하고 disable
 const midGrey = { backgroundColor: '#343434' };
 const darkGrey = { backgroundColor: '#111111' };
 const midBlue = { backgroundColor: '#336389' };
 
-// TODO: 이미지를 넘겼을 때는 어떻게 처리하면 좋을지 생각
 const buttons = [
   [
     makeProps(Keypad.EMPTY, midGrey),
@@ -86,6 +84,8 @@ const buttons = [
 
 <style scoped lang="scss">
 .input-pad {
+  height: 70%;
+  
   display: grid;
   grid-template-rows: repeat(6, 1fr);
   grid-row-gap: 3px;

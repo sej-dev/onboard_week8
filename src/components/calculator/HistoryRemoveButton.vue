@@ -1,5 +1,5 @@
 <template>
-  <div class="history-bottom">
+  <div class="history-remove-button-block">
     <img
       :src="iconSrc"
       title="모든 기록 지우기"
@@ -30,14 +30,17 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.history-bottom {
-  position: sticky;
+.history-remove-button-block {
+  height: 70px;
+
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 
   .history-remove-button {
-    width: 4vh;
-    display: block;
-    margin-left: auto;
-    padding-right: 10px;
+    width: 40px;
+    height: 40px;
+    padding-right: 20px;
   }
 }
 </style>

@@ -21,10 +21,19 @@ export default {
 
 <style scoped>
 .result-formula {
-  font-size: 1.25rem;
+  flex-grow: 1;
+
+  display: flex;
+  justify-content: end;
+  align-items: center;
+
+  color: #c7c7c7;
+  font-weight: 100;
+
+  /* font-size: 1.25rem;
   color: #c7c7c7;
   font-weight: 100;
   height: 100%;
-  line-height: 100%;
+  line-height: 100%; */
 }
 </style>
