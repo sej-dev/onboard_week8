@@ -85,7 +85,7 @@ const buttons = [
 <style scoped lang="scss">
 .input-pad {
   height: 70%;
-  
+
   display: grid;
   grid-template-rows: repeat(6, 1fr);
   grid-row-gap: 3px;
@@ -93,7 +93,7 @@ const buttons = [
   .input-pad-row {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-column-gap: 3px;
+    gap: 3px;
   }
 }
 </style>

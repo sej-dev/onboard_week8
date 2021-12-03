@@ -51,12 +51,12 @@ export default {
 
     .formula {
       color: #c7c7c7;
-      word-spacing: 0.8vmin;
+      word-spacing: max(0.5rem, 0.8vmin);
     }
 
     .result {
       font-weight: 600;
-      font-size: 3vmin;
+      font-size: max(2rem, 3vmin);
       margin-top: 15px;
     }
   }

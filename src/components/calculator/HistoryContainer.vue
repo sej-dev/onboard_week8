@@ -41,7 +41,7 @@ export default {
   height: 70%;
   .history-empty {
     padding: 20px;
-    font-size: 2vmin;
+    font-size: max(1.5rem, 2vmin);
     font-weight: bold;
   }
 }

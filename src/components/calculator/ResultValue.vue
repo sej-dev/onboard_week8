@@ -34,7 +34,7 @@ export default {
   justify-content: end;
   align-items: center;
 
-  font-size: 7vmin;
+  font-size: max(3rem, 7vmin);
   font-weight: bold;
 }
 </style>
