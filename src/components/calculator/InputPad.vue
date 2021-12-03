@@ -75,11 +75,36 @@ const buttons = [
     makeProps(Keypad.CLEAR_ALL, midGrey),
     makeProps(Keypad.CLEAR_ONE_CHAR, midGrey),
   ],
-  [makeProps(Keypad.EMPTY, midGrey), makeProps(Keypad.EMPTY, midGrey), makeProps(Keypad.EMPTY, midGrey), makeProps(Keypad.DIVIDE, midGrey)],
-  [makeProps(Keypad.SEVEN, darkGrey), makeProps(Keypad.EIGHT, darkGrey), makeProps(Keypad.NINE, darkGrey), makeProps(Keypad.MULTIPLY, midGrey)],
-  [makeProps(Keypad.FOUR, darkGrey), makeProps(Keypad.FIVE, darkGrey), makeProps(Keypad.SIX, darkGrey), makeProps(Keypad.SUBTRACT, midGrey)],
-  [makeProps(Keypad.ONE, darkGrey), makeProps(Keypad.TWO, darkGrey), makeProps(Keypad.THREE, darkGrey), makeProps(Keypad.SUM, midGrey)],
-  [makeProps(Keypad.NEGATE, darkGrey), makeProps(Keypad.ZERO, darkGrey), makeProps(Keypad.DOT, darkGrey), makeProps(Keypad.EQUAL, midBlue)],
+  [ 
+    makeProps(Keypad.EMPTY, midGrey), 
+    makeProps(Keypad.EMPTY, midGrey), 
+    makeProps(Keypad.EMPTY, midGrey), 
+    makeProps(Keypad.DIVIDE, midGrey)
+  ],
+  [
+    makeProps(Keypad.SEVEN, darkGrey), 
+    makeProps(Keypad.EIGHT, darkGrey), 
+    makeProps(Keypad.NINE, darkGrey), 
+    makeProps(Keypad.MULTIPLY, midGrey)
+  ],
+  [
+    makeProps(Keypad.FOUR, darkGrey), 
+    makeProps(Keypad.FIVE, darkGrey), 
+    makeProps(Keypad.SIX, darkGrey),
+    makeProps(Keypad.SUBTRACT, midGrey)
+  ],
+  [
+    makeProps(Keypad.ONE, darkGrey),
+    makeProps(Keypad.TWO, darkGrey),
+    makeProps(Keypad.THREE, darkGrey),
+    makeProps(Keypad.SUM, midGrey)
+  ],
+  [
+    makeProps(Keypad.NEGATE, darkGrey),
+    makeProps(Keypad.ZERO, darkGrey),
+    makeProps(Keypad.DOT, darkGrey), 
+    makeProps(Keypad.EQUAL, midBlue)
+  ],
 ];
 </script>
 
