@@ -1,6 +1,11 @@
 <template>
   <div class="history-bottom">
-    <img :src="iconSrc" title="모든 기록 지우기" class="history-remove-button" @click="onRemoveIconClick" />
+    <img
+      :src="iconSrc"
+      title="모든 기록 지우기"
+      class="history-remove-button"
+      @click="onRemoveIconClick"
+    >
   </div>
 </template>
 

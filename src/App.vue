@@ -7,8 +7,6 @@
 import CalculatorConatiner from '@/components/calculator/CalculatorConatiner.vue';
 import TheHeader from '@/components/layout/TheHeader.vue';
 
-import Test from '@/assets/image/';
-
 export default {
   name: 'App',
   components: {

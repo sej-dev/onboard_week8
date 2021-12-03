@@ -1,7 +1,16 @@
 <template>
   <div class="input-pad">
-    <div class="input-pad-row" v-for="row in buttons" :key="row[0].key">
-      <input-pad-button v-for="button in row" :key="button.keypad.type" v-bind="button" @click-pad="onClickPad" />
+    <div
+      v-for="(row, idx) in buttons"
+      :key="idx"
+      class="input-pad-row"
+    >
+      <input-pad-button
+        v-for="button in row"
+        :key="button.keypad.type"
+        v-bind="button"
+        @click-pad="onClickPad"
+      />
     </div>
   </div>
 </template>
@@ -17,8 +26,8 @@ import Keypad from '@/constants/calculator/Keypad';
 import Keyboard from '@/constants/calculator/Keyboard';
 
 export default {
-  components: { InputPadButton },
   name: 'InputPad',
+  components: { InputPadButton },
   setup() {
     const { handlePadInput } = usePadInput();
 

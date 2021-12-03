@@ -1,6 +1,11 @@
 <template>
   <div class="result-container">
-    <img class="history" :src="historyIcon" alt="이전 기록 아이콘" @click="onHistoryBtnClick" />
+    <img
+      class="history"
+      :src="historyIcon"
+      alt="이전 기록 아이콘"
+      @click="onHistoryBtnClick"
+    >
     <result-formula />
     <result-value />
   </div>
@@ -14,8 +19,8 @@ import HistoryIcon from '@/assets/icon/history_50.png';
 import { useStore } from 'vuex';
 
 export default {
-  components: { ResultFormula, ResultValue },
   name: 'ResultContainer',
+  components: { ResultFormula, ResultValue },
 
   setup() {
     const store = useStore();

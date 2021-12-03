@@ -1,5 +1,5 @@
 <template>
-  <div class="result-formula" v-html="formula"></div>
+  <div class="result-formula" v-html="formula" />
 </template>
 
 <script>

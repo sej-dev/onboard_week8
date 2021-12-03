@@ -1,11 +1,23 @@
 <template>
   <template v-if="props.keypad.img">
-    <button class="input-pad-button" :style="props.style" @click="onClick">
-      <img class="icon" :src="props.keypad.img" />
+    <button
+      class="input-pad-button"
+      :style="props.style"
+      @click="onClick"
+    >
+      <img
+        class="icon"
+        :src="props.keypad.img"
+      >
     </button>
   </template>
   <template v-else>
-    <button v-html="props.keypad.html" class="input-pad-button" :style="props.style" @click="onClick"></button>
+    <button
+      class="input-pad-button"
+      :style="props.style"
+      @click="onClick"
+      v-html="props.keypad.html"
+    />
   </template>
 </template>
 

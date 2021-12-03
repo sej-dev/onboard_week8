@@ -1,8 +1,17 @@
 <template>
   <ul class="history-list">
-    <li v-for="history in histories" :key="history.formula" class="history-item">
-      <div v-html="history.formula" class="formula"></div>
-      <div class="result">{{ addComma(history.result) }}</div>
+    <li
+      v-for="history in histories"
+      :key="history.formula"
+      class="history-item"
+    >
+      <div
+        class="formula"
+        v-html="history.formula"
+      />
+      <div class="result">
+        {{ addComma(history.result) }}
+      </div>
     </li>
   </ul>
   <history-remove-button />
@@ -16,8 +25,8 @@ import HistoryRemoveButton from '@/components/calculator/HistoryRemoveButton.vue
 import { addComma } from '@/utils/calculator';
 
 export default {
-  components: { HistoryRemoveButton },
   name: 'HistoryList',
+  components: { HistoryRemoveButton },
   setup() {
     const store = useStore();
     const histories = computed(() => store.getters['calculator/history']);

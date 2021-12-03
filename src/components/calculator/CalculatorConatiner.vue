@@ -14,8 +14,8 @@ import { computed } from 'vue';
 import { useStore } from 'vuex';
 
 export default {
-  components: { ResultConatiner, InputPad, HistoryContainer },
   name: 'CalculatorContainer',
+  components: { ResultConatiner, InputPad, HistoryContainer },
 
   setup() {
     const store = useStore();

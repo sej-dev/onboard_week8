@@ -1,21 +1,31 @@
 <template>
-  <div class="history-container" :class="classObject">
-    <p v-if="hasHistory === false" class="empty">아직 기록이 없음</p>
+  <div
+    class="history-container"
+    :class="classObject"
+  >
+    <p
+      v-if="hasHistory === false"
+      class="empty"
+    >
+      아직 기록이 없음
+    </p>
     <history-list v-else />
   </div>
 </template>
 
 <script>
-import HistoryList from '@/components/calculator/HistoryList.vue';
-import { useStore } from 'vuex';
-import { computed } from 'vue';
+import HistoryList from "@/components/calculator/HistoryList.vue";
+import { useStore } from "vuex";
+import { computed } from "vue";
 
 export default {
-  name: 'HistoryContainer',
+  name: "HistoryContainer",
   components: { HistoryList },
   setup() {
     const store = useStore();
-    const hasHistory = computed(() => store.state.calculator.history.length > 0);
+    const hasHistory = computed(
+      () => store.state.calculator.history.length > 0
+    );
 
     return {
       hasHistory,

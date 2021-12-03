@@ -30,7 +30,8 @@
       "node": true
     },
     "extends": [
-      "plugin:vue/vue3-essential"
+      
+      "plugin:vue/vue3-recommended"
     ],
     "parserOptions": {
       "parser": "babel-eslint"
@@ -43,3 +44,5 @@
     "not dead"
   ]
 }
+
+
