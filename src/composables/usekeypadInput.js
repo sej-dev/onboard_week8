@@ -11,7 +11,7 @@ function usePadInput() {
   const numberEditMode = computed(() => store.state.calculator.numberEditMode);
   const arithmeticError = computed(() => store.state.calculator.error);
 
-  const handlePadInput = (padInput) => {
+  const handleKeypadInput = (padInput) => {
     if (arithmeticError.value.hasError) {
       store.commit('calculator/unsetError');
     }
@@ -89,7 +89,7 @@ function usePadInput() {
   };
 
   return {
-    handlePadInput,
+    handleKeypadInput,
   };
 }
 

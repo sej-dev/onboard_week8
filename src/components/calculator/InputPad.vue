@@ -20,7 +20,7 @@ import InputPadButton from '@/components/calculator/InputPadButton.vue';
 
 import { onBeforeUnmount, onMounted } from 'vue';
 
-import usePadInput from '@/composables/usePadInput';
+import usekeypadInput from '@/composables/usekeypadInput';
 
 import Keypad from '@/constants/calculator/Keypad';
 import Keyboard from '@/constants/calculator/Keyboard';
@@ -30,14 +30,14 @@ export default {
   name: 'InputPad',
   components: { InputPadButton },
   setup() {
-    const { handlePadInput } = usePadInput();
+    const { handleKeypadInput } = usekeypadInput();
 
     // operator 또는 = 입력 시 토큰을 생성하고 vuex에 저장
-    const onClickKeypad = (keypad) => handlePadInput(keypad);
+    const onClickKeypad = (keypad) => handleKeypadInput(keypad);
 
     const onKeydown = ({ key }) => {
       const keypad = Keyboard[key];
-      if (keypad) handlePadInput(keypad);
+      if (keypad) handleKeypadInput(keypad);
     };
 
     onMounted(() => {
