@@ -1,6 +1,10 @@
 import Keypad from '@/constants/calculator/Keypad';
 import Big from 'big.js';
 
+export function removeZeroPrefix(numStr){
+  return Big(numStr).toString();
+}
+
 export function toIntegerFormatWhenIntegerValue(numStr) {
   return isInteger(numStr) ? numStr.replace(/\.0*$/, '') : numStr;
 }

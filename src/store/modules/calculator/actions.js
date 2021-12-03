@@ -1,5 +1,5 @@
 import Keypad from '@/constants/calculator/Keypad';
-import { toIntegerFormatWhenIntegerValue, isRationalDiffIntegerNumber, calcNumOpNumSeq } from '@/store/modules/calculator/utils';
+import { toIntegerFormatWhenIntegerValue, isRationalDiffIntegerNumber, calcNumOpNumSeq, removeZeroPrefix } from '@/store/modules/calculator/utils';
 import CalculatorToken from '@/class/calculator/CalculatorToken';
 import ArithmeticError from '@/constants/calculator/ArithmeticError';
 
@@ -210,15 +210,13 @@ const actions = {
   combineDigit({ commit, state }, payload) {
     const token = payload;
     const { content: digit } = token;
-    const { numberEditMode, stack } = state;
+    const { numberEditMode, stack, number } = state;
 
     // TODO: toggleNumberEditMode로 분리
     if (numberEditMode === 'replace') {
       
       const lastIdx = stack.length - 1;
       const top = stack[lastIdx];
-      
-      if(Keypad.ZERO.equalTo(token) || Keypad.ZERO.equalTo(Keypad.ZERO)) return;
 
       if (top && Keypad.EQUAL.equalTo(top.type)) {
         commit('clearStack');
@@ -226,8 +224,10 @@ const actions = {
 
       commit('setNumber', digit);
       commit('changeNumberEditMode', 'append');
+
     } else if (numberEditMode === 'append') {
-      commit('setNumber', `${state.number}${digit}`);
+
+      commit('setNumber', removeZeroPrefix(`${number}${digit}`));
     }
   },
 };
