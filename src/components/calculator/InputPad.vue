@@ -24,6 +24,7 @@ import usePadInput from '@/composables/usePadInput';
 
 import Keypad from '@/constants/calculator/Keypad';
 import Keyboard from '@/constants/calculator/Keyboard';
+import calculatorColor from '@/constants/color/calculator';
 
 export default {
   name: 'InputPad',
@@ -63,9 +64,9 @@ function makeProps(keypad, style) {
   };
 }
 
-const midGrey = { backgroundColor: '#343434' };
-const darkGrey = { backgroundColor: '#111111' };
-const midBlue = { backgroundColor: '#336389' };
+const midGrey = { backgroundColor: calculatorColor.keypad.midGrey };
+const darkGrey = { backgroundColor: calculatorColor.keypad.darkGrey };
+const midBlue = { backgroundColor: calculatorColor.keypad.midBlue };
 
 const buttons = [
   [

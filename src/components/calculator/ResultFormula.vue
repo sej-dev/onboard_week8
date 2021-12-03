@@ -6,6 +6,8 @@
 import { computed } from 'vue';
 import { useStore } from 'vuex';
 
+import calculatorColor from '@/constants/color/calculator';
+
 export default {
   name: 'ResultFormula',
   setup() {
@@ -14,6 +16,7 @@ export default {
 
     return {
       formula,
+      color: calculatorColor,
     };
   },
 };
@@ -27,7 +30,7 @@ export default {
   justify-content: end;
   align-items: center;
 
-  color: #c7c7c7;
+  color: v-bind('color.font.darkWhite');
   font-weight: 100;
 
 }

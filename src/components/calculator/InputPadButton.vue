@@ -23,6 +23,7 @@
 
 <script>
 import KeypadEnum from '@/class/calculator/KeypadEnum';
+import calculatorColor from '@/constants/color/calculator';
 
 export default {
   name: 'InputPadButton',
@@ -47,7 +48,7 @@ export default {
 
     return {
       props,
-
+      color: calculatorColor,
       onClick,
     };
   },
@@ -59,7 +60,7 @@ export default {
 
   font-size: max(1.5rem, 4vmin);
   text-align: center;
-  color: #f4f4f4;
+  color: v-bind('color.font.white');
 
   .icon {
     width: max(1.5rem, 4vmin);
