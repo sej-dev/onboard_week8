@@ -29,6 +29,7 @@ function usePadInput() {
       );
       return;
     }
+    
     // .
     if (Keypad.DOT.equalTo(padInput)) {
       store.dispatch('calculator/handleDot', {

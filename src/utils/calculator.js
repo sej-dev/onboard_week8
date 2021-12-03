@@ -18,8 +18,12 @@ export function isLengthExceeded(numStr) {
   return false;
 }
 
+export function toExponentialExpr(numStr){
+  return Big(numStr).toExponential(CalculatorCondition.DECIMAL_POINT_BELOW_LEN_LIMIT);
+}
+
 export function addComma(numStr) {
-  if (isLengthExceeded(numStr)) return Big(numStr).toExponential(CalculatorCondition.DECIMAL_POINT_BELOW_LEN_LIMIT);
+  if (isLengthExceeded(numStr)) return toExponentialExpr(numStr);
 
   const [decimalPointAbove, decimalPointBelow] = numStr.split(Keypad.DOT.html);
 

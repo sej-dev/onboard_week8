@@ -1,12 +1,12 @@
 import Keypad from '@/constants/calculator/Keypad';
 
-import { toIntegerFormatWhenIntegerValue } from '@/store/modules/calculator/utils';
+import { toFomatNumberByPreCondition } from '@/store/modules/calculator/utils';
 
 const mutations = {
   // actions 내부에서만 쓰이는 mutation
   pushStack(state, payload) {
     if (payload.type.parent === Keypad.NUMBER) {
-      payload.content = toIntegerFormatWhenIntegerValue(payload.content);
+      payload.content = toFomatNumberByPreCondition(payload.content);
     }
     state.stack.push(payload);
   },
@@ -35,12 +35,12 @@ const mutations = {
     state.error.hasError = true;
     state.error.code = payload;
   },
+
+  // 컴포넌트에서 사용하는 mutation
   unsetError(state) {
     state.error.hasError = false;
     state.error.code = null;
   },
-
-  // 컴포넌트에서 사용하는 mutation
   clearHistories(state) {
     state.history = [];
   },

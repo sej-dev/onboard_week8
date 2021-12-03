@@ -1,6 +1,6 @@
 class CalculatorToken {
   constructor({ type, content }) {
-    this.type = type; // keypadEnum
+    this.type = type; // type of keypadEnum
     this.content = content;
   }
 }

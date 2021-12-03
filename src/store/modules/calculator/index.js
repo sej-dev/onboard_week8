@@ -16,6 +16,7 @@ const state = () => ({
 });
 
 const getters = {
+  // stack의 ['1', '-', '2'] -> '1 - 2'
   formula(state) {
     return state.stack.map((token) => token.content).join(' ');
   },

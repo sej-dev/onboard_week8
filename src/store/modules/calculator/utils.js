@@ -1,25 +1,32 @@
 import Keypad from '@/constants/calculator/Keypad';
+import { toExponentialExpr, isLengthExceeded } from '@/utils/calculator';
 import Big from 'big.js';
 
+// ex. 01 -> 1 
 export function removeZeroPrefix(numStr){
   return Big(numStr).toString();
 }
 
-export function toIntegerFormatWhenIntegerValue(numStr) {
-  return isInteger(numStr) ? numStr.replace(/\.0*$/, '') : numStr;
+// 화면에 숫자 표시하기 위해 
+export function toFomatNumberByPreCondition(numStr){
+  if (isInteger(numStr)) return numStr.replace(/\.0*$/, '');
+  if (isLengthExceeded(numStr)) return toExponentialExpr(numStr);
+  return numStr;
 }
 
+// 정수 판별
 export function isInteger(numStr) {
   if (/^\d+\.?0*$/.test(numStr)) return true;
   return false;
 }
 
-// 소수
+// 소수 판별
 export function isRationalDiffIntegerNumber(numStr) {
   if (/\./.test(numStr)) return true;
   return false;
 }
 
+// stack의 [num op num] 형식의 값 계산
 export function calcNumOpNumSeq(list) {
   const [num1, operator, num2] = list;
 

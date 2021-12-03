@@ -1,7 +1,7 @@
 export default class KeypadEnum {
   constructor({ name, parent, html, img }) {
     this.name = name;
-    this.parent = parent; // KeypadEnum type
+    this.parent = parent; // type of KeypadEnum
     this.html = html;
     this.img = img;
   }
