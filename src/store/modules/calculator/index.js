@@ -8,7 +8,7 @@ const state = () => ({
   history: [], // [ { stack: [], number } ]
   error: {
     hasError: false,
-    code: null,
+    code: null, // ErrorCode
   },
   css: {
     showHistory: false,

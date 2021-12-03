@@ -24,18 +24,19 @@ export default {
 
     // operator 또는 = 입력 시 토큰을 생성하고 vuex에 저장
     const onClickPad = (keypad) => handlePadInput(keypad);
-    const padInputHandler = ({ key }) => {
+
+    const onKeydown = ({ key }) => {
       const keypad = Keyboard[key];
       if (keypad) handlePadInput(keypad);
     };
 
     onMounted(() => {
       // handle keydown event
-      document.addEventListener('keydown', padInputHandler);
+      document.addEventListener('keydown', onKeydown);
     });
 
     onBeforeUnmount(() => {
-      document.removeEventListener('keydown', padInputHandler);
+      document.removeEventListener('keydown', onKeydown);
     });
 
     return {
@@ -56,7 +57,7 @@ function makeProps(keypad, style) {
 // TODO: 에러 있을 경우 숫자 제외하고 disable
 const midGrey = { backgroundColor: '#343434' };
 const darkGrey = { backgroundColor: '#111111' };
-const midBlue = { backgroundColor: '' };
+const midBlue = { backgroundColor: '#336389' };
 
 // TODO: 이미지를 넘겼을 때는 어떻게 처리하면 좋을지 생각
 const buttons = [
@@ -70,7 +71,7 @@ const buttons = [
   [makeProps(Keypad.SEVEN, darkGrey), makeProps(Keypad.EIGHT, darkGrey), makeProps(Keypad.NINE, darkGrey), makeProps(Keypad.MULTIPLY, midGrey)],
   [makeProps(Keypad.FOUR, darkGrey), makeProps(Keypad.FIVE, darkGrey), makeProps(Keypad.SIX, darkGrey), makeProps(Keypad.SUBTRACT, midGrey)],
   [makeProps(Keypad.ONE, darkGrey), makeProps(Keypad.TWO, darkGrey), makeProps(Keypad.THREE, darkGrey), makeProps(Keypad.SUM, midGrey)],
-  [makeProps(Keypad.NEGATE, darkGrey), makeProps(Keypad.ZERO, darkGrey), makeProps(Keypad.DOT, darkGrey), makeProps(Keypad.EQUAL, darkGrey)],
+  [makeProps(Keypad.NEGATE, darkGrey), makeProps(Keypad.ZERO, darkGrey), makeProps(Keypad.DOT, darkGrey), makeProps(Keypad.EQUAL, midBlue)],
 ];
 </script>
 

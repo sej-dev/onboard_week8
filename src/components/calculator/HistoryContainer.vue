@@ -29,6 +29,7 @@ export default {
   background-color: rgba(17, 17, 17, 0.5);
   display: grid;
   grid-template-rows: minmax(0, 1fr) 50px;
+  overflow: auto;
 
   .empty {
     padding: 20px;

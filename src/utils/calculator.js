@@ -20,6 +20,7 @@ export function isLengthExceeded(numStr) {
 
 export function addComma(numStr) {
   if (isLengthExceeded(numStr)) return Big(numStr).toExponential(CalculatorCondition.DECIMAL_POINT_BELOW_LEN_LIMIT);
+
   const [decimalPointAbove, decimalPointBelow] = numStr.split(Keypad.DOT.html);
 
   let numCommaAdded = decimalPointAbove.replace(/\B(?=(\d{3})+(?!\d))/g, ',', '$1,');

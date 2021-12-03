@@ -1,5 +1,7 @@
 <template>
-  <img :src="iconSrc" title="모든 기록 지우기" class="history-remove-button" @click="onRemoveIconClick" />
+  <div class="history-bottom">
+    <img :src="iconSrc" title="모든 기록 지우기" class="history-remove-button" @click="onRemoveIconClick" />
+  </div>
 </template>
 
 <script>
@@ -22,11 +24,15 @@ export default {
 };
 </script>
 
-<style>
-.history-remove-button {
+<style scoped lang="scss">
+.history-bottom {
   position: sticky;
-  width: 2rem;
-  margin-left: auto;
-  margin-right: 20px;
+
+  .history-remove-button {
+    width: 4vh;
+    display: block;
+    margin-left: auto;
+    padding-right: 10px;
+  }
 }
 </style>
