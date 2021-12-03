@@ -17,6 +17,10 @@ const mutations = {
   clearStack(state) {
     state.stack = [];
   },
+  replaceStackIndexOf(state, payload){
+    const { index, token } = payload;
+    state.stack[index] = token;
+  },
   setNumber(state, payload) {
     state.number = payload;
   },

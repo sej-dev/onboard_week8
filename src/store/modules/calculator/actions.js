@@ -105,8 +105,11 @@ const actions = {
 
       // case2와 유사: [num op num =], (num =)
       if (stack.length === 4) {
-        // TODO: mutation 사용하도록
-        stack[0] = numberToken;
+        commit('replaceStackIndexOf', {
+          index: 0,
+          token: numberToken,
+        })
+        
         const result = calcNumOpNumSeq(stack.slice());
         commit('setNumber', toIntegerFormatWhenIntegerValue(result));
         commit('addHistory', {
@@ -205,13 +208,17 @@ const actions = {
     }
   },
   combineDigit({ commit, state }, payload) {
-    const { content: digit } = payload;
+    const token = payload;
+    const { content: digit } = token;
     const { numberEditMode, stack } = state;
 
     // TODO: toggleNumberEditMode로 분리
     if (numberEditMode === 'replace') {
+      
       const lastIdx = stack.length - 1;
       const top = stack[lastIdx];
+      
+      if(Keypad.ZERO.equalTo(token) || Keypad.ZERO.equalTo(Keypad.ZERO)) return;
 
       if (top && Keypad.EQUAL.equalTo(top.type)) {
         commit('clearStack');
