@@ -14,21 +14,21 @@
 </template>
 
 <script>
-import HistoryList from "@/components/calculator/HistoryList.vue";
-import { useStore } from "vuex";
-import { computed } from "vue";
+import HistoryList from '@/components/calculator/HistoryList.vue';
+import { useStore } from 'vuex';
+import { computed } from 'vue';
+import calculatorColor from '@/constants/color/calculator';
 
 export default {
-  name: "HistoryContainer",
+  name: 'HistoryContainer',
   components: { HistoryList },
   setup() {
     const store = useStore();
-    const hasHistory = computed(
-      () => store.state.calculator.history.length > 0
-    );
+    const hasHistory = computed(() => store.state.calculator.history.length > 0);
 
     return {
       hasHistory,
+      color: calculatorColor,
     };
   },
 };
@@ -36,7 +36,7 @@ export default {
 
 <style scoped lang="scss">
 .history-container {
-  background-color: rgba(17, 17, 17, 0.5);
+  background-color: v-bind('color.history.grey');
 
   height: 70%;
   .history-empty {

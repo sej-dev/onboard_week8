@@ -24,6 +24,8 @@ import HistoryRemoveButton from '@/components/calculator/HistoryRemoveButton.vue
 
 import { addComma } from '@/utils/calculator';
 
+import calculatorColor from "@/constants/color/calculator";
+
 export default {
   name: 'HistoryList',
   components: { HistoryRemoveButton },
@@ -33,6 +35,7 @@ export default {
 
     return {
       histories,
+      color: calculatorColor,
       addComma,
     };
   },
@@ -50,7 +53,7 @@ export default {
     padding: 20px;
 
     .formula {
-      color: #c7c7c7;
+      color: v-bind('color.font.darkWhite');
       word-spacing: max(0.5rem, 0.8vmin);
     }
 

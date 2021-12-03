@@ -40,9 +40,6 @@ export default {
       },
     },
   },
-  emits: {
-    click: null,
-  },
   setup(props, context) {
     const onClick = () => {
       context.emit('click-pad', props.keypad);
