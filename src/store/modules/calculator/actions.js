@@ -238,6 +238,7 @@ const actions = {
 
           return;
         }
+
       default: return;
     }
   },

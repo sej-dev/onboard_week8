@@ -52,6 +52,10 @@ export default {
   .history-item {
     padding: 20px;
 
+    &:hover{
+      background-color: v-bind('color.keypad.lightGrey');
+    }
+
     .formula {
       color: v-bind('color.font.darkWhite');
       word-spacing: max(0.5rem, 0.8vmin);

@@ -1,8 +1,8 @@
-class CalculatorToken {
+export default class CalculatorToken {
+  
   constructor({ type, content }) {
-    this.type = type; // type of keypadEnum
+    this.type = type; // type of Keypad
     this.content = content;
   }
-}
 
-export default CalculatorToken;
+}

@@ -1,4 +1,4 @@
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useStore } from 'vuex';
 
 import KeypadSet from '@/constants/calculator/KeypadSet';
@@ -13,7 +13,11 @@ function usePadInput() {
   const numberEditMode = computed(() => store.state.calculator.numberEditMode);
   const arithmeticError = computed(() => store.state.calculator.error);
 
+  const curKeypad = ref(KeypadSet.EMPTY);
+
   const handleKeypadInput = (padInput) => {
+
+    curKeypad.value = padInput;
     
     if (arithmeticError.value.hasError) {
       store.commit('calculator/unsetError');
@@ -83,7 +87,7 @@ function usePadInput() {
       return;
     }
 
-    // 삭제 3개
+    // C, CE, x
     if (KeypadSet.CLEAR.equalTo(padInput.parent)) {
       store.dispatch(
         'calculator/handleClear',
@@ -99,6 +103,7 @@ function usePadInput() {
 
   return {
     handleKeypadInput,
+    curKeypad
   };
 }
 

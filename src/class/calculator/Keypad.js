@@ -1,14 +1,15 @@
-export default class KeypadEnum {
+export default class Keypad {
+  
   constructor({ name, parent, html, img }) {
     this.name = name;
-    this.parent = parent; // type of KeypadEnum
+    this.parent = parent; // type of Keypad
     this.html = html;
     this.img = img;
   }
 
-  equalTo(anotherKeypadEnum) {
-    if (!anotherKeypadEnum) return false;
+  equalTo(anotherKeypad) {
+    if (!anotherKeypad) return false;
 
-    return anotherKeypadEnum.name === this.name;
+    return anotherKeypad.name === this.name;
   }
 }

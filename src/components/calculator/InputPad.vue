@@ -9,6 +9,7 @@
         v-for="button in rowOfButtons"
         :key="button.keypad.name"
         v-bind="button"
+        :cur-keypad="curKeypad"
         @click-keypad="onClickKeypad"
       />
     </div>
@@ -16,23 +17,25 @@
 </template>
 
 <script>
-import { onBeforeUnmount, onMounted } from 'vue';
+import { computed, onBeforeUnmount, onMounted } from 'vue';
 
 import InputPadButton from '@/components/calculator/InputPadButton.vue';
 
+import CalculatorColors from '@/constants/color/CalculatorColors';
 import useKeypadInput from '@/composables/useKeypadInput';
 import KeypadSet from '@/constants/calculator/KeypadSet';
 import KeyboardSet from '@/constants/calculator/KeyboardSet';
-import CalculatorColors from '@/constants/color/CalculatorColors';
 
 export default {
   name: 'InputPad',
   components: { InputPadButton },
   setup() {
-    const { handleKeypadInput } = useKeypadInput();
+    const { handleKeypadInput, curKeypad } = useKeypadInput();
 
     // 입력에 따라 토큰을 생성하고 vuex에 저장
-    const onClickKeypad = (keypad) => handleKeypadInput(keypad);
+    const onClickKeypad = (keypad) => {
+      handleKeypadInput(keypad);
+    };
 
     const onKeydown = ({ key }) => {
       const keypad = KeyboardSet[key];
@@ -50,6 +53,7 @@ export default {
 
     return {
       buttons,
+      curKeypad,
 
       onClickKeypad,
     };

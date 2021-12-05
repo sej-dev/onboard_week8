@@ -5,7 +5,7 @@ import { toNumberFormattedForDisplay } from '@/store/modules/calculator/utils';
 const mutations = {
   // actions 내부에서만 쓰이는 mutation
   pushStack(state, payload) {
-    if (payload.type.parent === KeypadSet.NUMBER) {
+    if (KeypadSet.NUMBER.equalTo(payload.type)) {
       payload.content = toNumberFormattedForDisplay(payload.content);
     }
     state.stack.push(payload);

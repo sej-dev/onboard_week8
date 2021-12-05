@@ -4,11 +4,11 @@ import actions from '@/store/modules/calculator/actions';
 const state = () => ({
   stack: [],
   number: '0',
-  numberEditMode: 'replace', // [ replace, append ],
-  history: [], // [ { stack: [], number } ]
+  numberEditMode: 'replace', // 'replace', 'append'
+  history: [], // [ { stack: [], number }, ... ]
   error: {
     hasError: false,
-    code: null, // ErrorCode
+    code: null, // type of ErrorCode
   },
   css: {
     showHistory: false,
