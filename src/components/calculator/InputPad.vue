@@ -31,7 +31,7 @@ export default {
   setup() {
     const { handleKeypadInput } = useKeypadInput();
 
-    // operator 또는 = 입력 시 토큰을 생성하고 vuex에 저장
+    // 입력에 따라 토큰을 생성하고 vuex에 저장
     const onClickKeypad = (keypad) => handleKeypadInput(keypad);
 
     const onKeydown = ({ key }) => {
@@ -40,7 +40,7 @@ export default {
     };
 
     onMounted(() => {
-      // handle keydown event
+      // keydown event 처리
       document.addEventListener('keydown', onKeydown);
     });
 

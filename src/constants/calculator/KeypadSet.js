@@ -34,4 +34,4 @@ KeypadSet.NEGATE = new Keypad({ name: 'NEGATE', html: '+/-' });
 
 KeypadSet.EMPTY = new Keypad({ name: 'EMPTY', html: '' });
 
-export default Keypad;
+export default KeypadSet;
