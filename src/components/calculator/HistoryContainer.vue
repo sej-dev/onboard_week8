@@ -4,7 +4,7 @@
     :class="classObject"
   >
     <p
-      v-if="hasHistory === false"
+      v-if="!hasHistory"
       class="history-empty"
     >
       아직 기록이 없음
@@ -14,9 +14,11 @@
 </template>
 
 <script>
-import HistoryList from '@/components/calculator/HistoryList.vue';
 import { useStore } from 'vuex';
 import { computed } from 'vue';
+
+import HistoryList from '@/components/calculator/HistoryList.vue';
+
 import CalculatorColors from '@/constants/color/CalculatorColors';
 
 export default {
@@ -39,6 +41,7 @@ export default {
   background-color: v-bind('color.history.grey');
 
   height: 70%;
+
   .history-empty {
     padding: 20px;
     font-size: max(1.5rem, 2vmin);

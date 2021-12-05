@@ -10,8 +10,9 @@
 </template>
 
 <script>
-import TrashIcon from '@/assets/icon/trash_50.png';
 import { useStore } from 'vuex';
+
+import TrashIcon from '@/assets/icon/trash_50.png';
 
 export default {
   name: 'HistoryRemoveButton',

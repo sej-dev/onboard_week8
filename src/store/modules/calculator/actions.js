@@ -1,11 +1,13 @@
-import Keypad from '@/constants/calculator/Keypad';
-import { toFomatNumberByPreCondition, isRationalDiffIntegerNumber, calcNumOpNumSeq, removeZeroPrefix } from '@/store/modules/calculator/utils';
+import KeypadSet from '@/constants/calculator/KeypadSet';
+import { toNumberFormattedForDisplay, isDecimalFormat, calcNumOpNumSeq, removeZeroPrefix } from '@/store/modules/calculator/utils';
 import CalculatorToken from '@/class/calculator/CalculatorToken';
 import ArithmeticError from '@/constants/calculator/ArithmeticError';
 
 const actions = {
+
   // 사칙연산
   handleOperator({ commit, state }, payload) {
+    
     const { numberToken, operatorToken } = payload;
     const { stack, numberEditMode } = state;
 
@@ -13,16 +15,17 @@ const actions = {
 
     // [case1] stack: [], payload: {num, op}
     if (stack.length === 0) {
+
       commit('pushStack', numberToken);
       commit('pushStack', operatorToken);
-      commit('setNumber', toFomatNumberByPreCondition(numberToken.content));
+      commit('setNumber', toNumberFormattedForDisplay(numberToken.content));
       return;
     }
 
-    // [case2] stack: [... op], payload: {op} -> op replace
-    const lastIdx = stack.length - 1;
-    const top = stack[lastIdx];
-    if ((numberEditMode === 'replace' && Keypad.OPERATOR.equalTo(top.type.parent)) || (stack.length === 2 && Keypad.EQUAL.equalTo(top.type))) {
+    // [case2] stack: [... op] or [num =], payload: {op} 
+    // -> op/= replace
+    const top = stack[stack.length - 1];
+    if ((numberEditMode === 'replace' && KeypadSet.OPERATOR.equalTo(top.type.parent)) || (stack.length === 2 && KeypadSet.EQUAL.equalTo(top.type))) {
       commit('popAndPushStack', operatorToken);
       return;
     }
@@ -32,10 +35,10 @@ const actions = {
     // -> stack: [result op2 num2]
     if (stack.length === 2) {
       commit('pushStack', numberToken);
-      commit('pushStack', {
-        type: Keypad.EQUAL,
-        content: Keypad.EQUAL.html,
-      });
+      commit('pushStack', new CalculatorToken({
+        type: KeypadSet.EQUAL,
+        content: KeypadSet.EQUAL.html,
+      }));
 
       const result = calcNumOpNumSeq(stack.slice());
       commit('addHistory', {
@@ -48,12 +51,12 @@ const actions = {
       commit(
         'pushStack',
         new CalculatorToken({
-          type: Keypad.NUMBER,
+          type: KeypadSet.NUMBER,
           content: result,
         })
       );
       commit('pushStack', operatorToken);
-      commit('setNumber', toFomatNumberByPreCondition(result));
+      commit('setNumber', toNumberFormattedForDisplay(result));
 
       return;
     }
@@ -69,12 +72,12 @@ const actions = {
       commit(
         'pushStack',
         new CalculatorToken({
-          type: Keypad.NUMBER,
+          type: KeypadSet.NUMBER,
           content: result,
         })
       );
       commit('pushStack', operatorToken);
-      commit('setNumber', toFomatNumberByPreCondition(result));
+      commit('setNumber', toNumberFormattedForDisplay(result));
     }
   },
 
@@ -92,7 +95,9 @@ const actions = {
     if (stack.length === 0) {
       commit('pushStack', numberToken);
       commit('pushStack', operatorToken);
-      commit('setNumber', toFomatNumberByPreCondition(numberToken.content));
+
+      commit('setNumber', toNumberFormattedForDisplay(numberToken.content));
+      
       commit('addHistory', {
         stack: stack.slice(),
         number: state.number,
@@ -101,12 +106,13 @@ const actions = {
     }
     
     // [case2] stack: [... =], payload {num, =}
-    if (Keypad.EQUAL.equalTo(top.type)) {
+    if (KeypadSet.EQUAL.equalTo(top.type)) {
       
       // [case1과 유사] stack: [num =], payload: {num, =}
+      // = 연속 입력
       // -> stack: [num =]
       if (stack.length === 2) {
-        commit('setNumber', toFomatNumberByPreCondition(stack[lastIdx - 1].content));
+        //commit('setNumber', toNumberFormattedForDisplay(stack[lastIdx - 1].content));
         commit('addHistory', {
           stack: stack.slice(),
           number: state.number,
@@ -124,7 +130,7 @@ const actions = {
         })
         
         const result = calcNumOpNumSeq(stack.slice());
-        commit('setNumber', toFomatNumberByPreCondition(result));
+        commit('setNumber', toNumberFormattedForDisplay(result));
         commit('addHistory', {
           stack: stack.slice(),
           number: state.number,
@@ -133,10 +139,10 @@ const actions = {
       }
     }
 
-    // [case3] stack: [num op], payload: {num, =}
+    // [case3] stack: [num1 op], payload: {num2, =}
     if (stack.length === 2) {
       // 0으로 나눌 경우 오류 처리
-      if (numberToken.content === '0' && Keypad.DIVIDE.equalTo(top.type)) {
+      if (numberToken.content === '0' && KeypadSet.DIVIDE.equalTo(top.type)) {
         commit('setError', ArithmeticError.DIVIDE_BY_ZERO);
         commit('clearStack');
         commit('changeNumberEditMode', 'replace');
@@ -148,7 +154,7 @@ const actions = {
       const result = calcNumOpNumSeq(stack.slice());
       commit('pushStack', operatorToken);
       
-      commit('setNumber', toFomatNumberByPreCondition(result));
+      commit('setNumber', toNumberFormattedForDisplay(result));
       commit('addHistory', {
         stack: stack.slice(),
         number: state.number,
@@ -159,20 +165,25 @@ const actions = {
   },
 
   // +/- 부호 변환
-  handleNegate({ commit, state }, payload) {
+  handleNegate({ commit, state }) {
+    
     const { number } = state;
 
     if (number === '0') return;
 
     const numberNegate = number.startsWith('-') ? number.replace('-', '') : `-${number}`;
-
-    commit('changeNumberEditMode', 'append');
+    
+    const top = stack[stack.length - 1];
+    if (top && !KeypadSet.EQUAL.equalTo(top.type)) {
+      commit('changeNumberEditMode', 'append');
+    }
     commit('setNumber', numberNegate);
   },
 
   // .
-  handleDot({ commit, state }, payload) {
-    const { numberEditMode } = state;
+  handleDot({ commit, state }) {
+    
+    const { numberEditMode, number } = state;
 
     if (numberEditMode === 'replace') {
       commit('setNumber', '0.');
@@ -180,10 +191,9 @@ const actions = {
       return;
     }
 
-    const { numberToken } = payload;
     // 소수가 아닌 경우에만 추가
-    if (!isRationalDiffIntegerNumber(numberToken.content)) {
-      commit('setNumber', `${numberToken.content}.`);
+    if (!isDecimalFormat(number)) {
+      commit('setNumber', `${number}.`);
     }
   },
   
@@ -193,18 +203,18 @@ const actions = {
 
     switch (token.type) {
 
-      case Keypad.CLEAR_ALL:
+      case KeypadSet.CLEAR_ALL:
         commit('clearStack');
         commit('setNumber', '0');
         commit('changeNumberEditMode', 'replace');
         return;
       
-        case Keypad.CLEAR_ENTRY:
+      case KeypadSet.CLEAR_ENTRY:
         commit('setNumber', '0');
         commit('changeNumberEditMode', 'replace');
         return;
-      
-        case Keypad.CLEAR_ONE_CHAR:
+    
+      case KeypadSet.CLEAR_ONE_CHAR:
         const { numberEditMode, number, stack } = state;
 
         if (numberEditMode === 'append') {
@@ -222,35 +232,35 @@ const actions = {
           return;
         }
 
-        const lastIdx = stack.length - 1;
-        const top = stack[lastIdx];
-        if (top && Keypad.EQUAL.equalTo(top.type)) {
+        const top = stack[stack.length - 1];
+        if (top && KeypadSet.EQUAL.equalTo(top.type)) {
           commit('clearStack');
 
           return;
         }
+      default: return;
     }
   },
   
   // 숫자
   combineDigit({ commit, state }, payload) {
+
     const token = payload;
     const { content: digit } = token;
     const { numberEditMode, stack, number } = state;
     
     if (numberEditMode === 'replace') {
       
-      const lastIdx = stack.length - 1;
-      const top = stack[lastIdx];
+      const top = stack[stack.length - 1];
 
-      if (top && Keypad.EQUAL.equalTo(top.type)) {
+      if (top && KeypadSet.EQUAL.equalTo(top.type)) {
         commit('clearStack');
       }
 
       commit('setNumber', digit);
       commit('changeNumberEditMode', 'append');
-
-    } else if (numberEditMode === 'append') {
+    } 
+    else if (numberEditMode === 'append') {
 
       commit('setNumber', removeZeroPrefix(`${number}${digit}`));
     }

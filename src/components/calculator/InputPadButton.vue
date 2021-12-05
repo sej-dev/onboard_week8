@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import KeypadEnum from '@/class/calculator/KeypadEnum';
+import Keypad from '@/class/calculator/Keypad';
 import CalculatorColors from '@/constants/color/CalculatorColors';
 
 export default {
@@ -31,7 +31,7 @@ export default {
     keypad: {
       required: true,
       validator(object) {
-        return object instanceof KeypadEnum;
+        return object instanceof Keypad;
       },
     },
     style: {
@@ -41,6 +41,7 @@ export default {
       },
     },
   },
+  emits: ['click-keypad'],
   setup(props, context) {
     const onKeypadClick = () => {
       context.emit('click-keypad', props.keypad);

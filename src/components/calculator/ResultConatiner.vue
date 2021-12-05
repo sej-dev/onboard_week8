@@ -14,11 +14,12 @@
 </template>
 
 <script>
+import { useStore } from 'vuex';
+
 import ResultFormula from '@/components/calculator/ResultFormula.vue';
 import ResultValue from '@/components/calculator/ResultValue.vue';
 
 import HistoryIcon from '@/assets/icon/history_50.png';
-import { useStore } from 'vuex';
 
 export default {
   name: 'ResultContainer',

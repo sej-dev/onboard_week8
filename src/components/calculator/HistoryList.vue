@@ -20,11 +20,11 @@
 <script>
 import { computed } from 'vue';
 import { useStore } from 'vuex';
+
 import HistoryRemoveButton from '@/components/calculator/HistoryRemoveButton.vue';
 
 import { addComma } from '@/utils/calculatorUtils';
-
-import CalculatorColors from "@/constants/color/CalculatorColors";
+import CalculatorColors from '@/constants/color/CalculatorColors';
 
 export default {
   name: 'HistoryList',

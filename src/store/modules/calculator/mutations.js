@@ -1,12 +1,12 @@
-import Keypad from '@/constants/calculator/Keypad';
+import KeypadSet from '@/constants/calculator/KeypadSet';
 
-import { toFomatNumberByPreCondition } from '@/store/modules/calculator/utils';
+import { toNumberFormattedForDisplay } from '@/store/modules/calculator/utils';
 
 const mutations = {
   // actions 내부에서만 쓰이는 mutation
   pushStack(state, payload) {
-    if (payload.type.parent === Keypad.NUMBER) {
-      payload.content = toFomatNumberByPreCondition(payload.content);
+    if (payload.type.parent === KeypadSet.NUMBER) {
+      payload.content = toNumberFormattedForDisplay(payload.content);
     }
     state.stack.push(payload);
   },

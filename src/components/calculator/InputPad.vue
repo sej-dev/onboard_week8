@@ -1,13 +1,13 @@
 <template>
   <div class="input-pad">
     <div
-      v-for="(row, idx) in buttons"
+      v-for="(rowOfButtons, idx) in buttons"
       :key="idx"
       class="input-pad-row"
     >
       <input-pad-button
-        v-for="button in row"
-        :key="button.keypad.type"
+        v-for="button in rowOfButtons"
+        :key="button.keypad.name"
         v-bind="button"
         @click-keypad="onClickKeypad"
       />
@@ -16,27 +16,26 @@
 </template>
 
 <script>
-import InputPadButton from '@/components/calculator/InputPadButton.vue';
-
 import { onBeforeUnmount, onMounted } from 'vue';
 
-import usekeypadInput from '@/composables/usekeypadInput';
+import InputPadButton from '@/components/calculator/InputPadButton.vue';
 
-import Keypad from '@/constants/calculator/Keypad';
-import Keyboard from '@/constants/calculator/Keyboard';
+import useKeypadInput from '@/composables/useKeypadInput';
+import KeypadSet from '@/constants/calculator/KeypadSet';
+import KeyboardSet from '@/constants/calculator/KeyboardSet';
 import CalculatorColors from '@/constants/color/CalculatorColors';
 
 export default {
   name: 'InputPad',
   components: { InputPadButton },
   setup() {
-    const { handleKeypadInput } = usekeypadInput();
+    const { handleKeypadInput } = useKeypadInput();
 
     // operator 또는 = 입력 시 토큰을 생성하고 vuex에 저장
     const onClickKeypad = (keypad) => handleKeypadInput(keypad);
 
     const onKeydown = ({ key }) => {
-      const keypad = Keyboard[key];
+      const keypad = KeyboardSet[key];
       if (keypad) handleKeypadInput(keypad);
     };
 
@@ -70,40 +69,40 @@ const midBlue = { backgroundColor: CalculatorColors.keypad.midBlue };
 
 const buttons = [
   [
-    makeProps(Keypad.EMPTY, midGrey),
-    makeProps(Keypad.CLEAR_ENTRY, midGrey),
-    makeProps(Keypad.CLEAR_ALL, midGrey),
-    makeProps(Keypad.CLEAR_ONE_CHAR, midGrey),
+    makeProps(KeypadSet.EMPTY, midGrey),
+    makeProps(KeypadSet.CLEAR_ENTRY, midGrey),
+    makeProps(KeypadSet.CLEAR_ALL, midGrey),
+    makeProps(KeypadSet.CLEAR_ONE_CHAR, midGrey),
   ],
   [ 
-    makeProps(Keypad.EMPTY, midGrey), 
-    makeProps(Keypad.EMPTY, midGrey), 
-    makeProps(Keypad.EMPTY, midGrey), 
-    makeProps(Keypad.DIVIDE, midGrey)
+    makeProps(KeypadSet.EMPTY, midGrey), 
+    makeProps(KeypadSet.EMPTY, midGrey), 
+    makeProps(KeypadSet.EMPTY, midGrey), 
+    makeProps(KeypadSet.DIVIDE, midGrey)
   ],
   [
-    makeProps(Keypad.SEVEN, darkGrey), 
-    makeProps(Keypad.EIGHT, darkGrey), 
-    makeProps(Keypad.NINE, darkGrey), 
-    makeProps(Keypad.MULTIPLY, midGrey)
+    makeProps(KeypadSet.SEVEN, darkGrey), 
+    makeProps(KeypadSet.EIGHT, darkGrey), 
+    makeProps(KeypadSet.NINE, darkGrey), 
+    makeProps(KeypadSet.MULTIPLY, midGrey)
   ],
   [
-    makeProps(Keypad.FOUR, darkGrey), 
-    makeProps(Keypad.FIVE, darkGrey), 
-    makeProps(Keypad.SIX, darkGrey),
-    makeProps(Keypad.SUBTRACT, midGrey)
+    makeProps(KeypadSet.FOUR, darkGrey), 
+    makeProps(KeypadSet.FIVE, darkGrey), 
+    makeProps(KeypadSet.SIX, darkGrey),
+    makeProps(KeypadSet.SUBTRACT, midGrey)
   ],
   [
-    makeProps(Keypad.ONE, darkGrey),
-    makeProps(Keypad.TWO, darkGrey),
-    makeProps(Keypad.THREE, darkGrey),
-    makeProps(Keypad.SUM, midGrey)
+    makeProps(KeypadSet.ONE, darkGrey),
+    makeProps(KeypadSet.TWO, darkGrey),
+    makeProps(KeypadSet.THREE, darkGrey),
+    makeProps(KeypadSet.SUM, midGrey)
   ],
   [
-    makeProps(Keypad.NEGATE, darkGrey),
-    makeProps(Keypad.ZERO, darkGrey),
-    makeProps(Keypad.DOT, darkGrey), 
-    makeProps(Keypad.EQUAL, midBlue)
+    makeProps(KeypadSet.NEGATE, darkGrey),
+    makeProps(KeypadSet.ZERO, darkGrey),
+    makeProps(KeypadSet.DOT, darkGrey), 
+    makeProps(KeypadSet.EQUAL, midBlue)
   ],
 ];
 </script>

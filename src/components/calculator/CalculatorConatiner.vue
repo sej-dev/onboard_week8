@@ -7,11 +7,12 @@
 </template>
 
 <script>
+import { computed } from 'vue';
+import { useStore } from 'vuex';
+
 import HistoryContainer from '@/components/calculator/HistoryContainer.vue';
 import InputPad from '@/components/calculator/InputPad.vue';
 import ResultConatiner from '@/components/calculator/ResultConatiner.vue';
-import { computed } from 'vue';
-import { useStore } from 'vuex';
 
 export default {
   name: 'CalculatorContainer',

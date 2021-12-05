@@ -1,33 +1,42 @@
-import Keypad from '@/constants/calculator/Keypad';
-import { toExponentialExpr, isLengthExceeded } from '@/utils/calculatorUtils';
+import KeypadSet from '@/constants/calculator/KeypadSet';
+import { toExponentialExpr, isLengthOverOnDisplay } from '@/utils/calculatorUtils';
 import Big from 'big.js';
 
-// ex. 01 -> 1 
+// ex. '01' -> '1'
 export function removeZeroPrefix(numStr){
+
   return Big(numStr).toString();
 }
 
 // 화면에 숫자 표시하기 위해 
-export function toFomatNumberByPreCondition(numStr){
-  if (isInteger(numStr)) return numStr.replace(/\.0*$/, '');
-  if (isLengthExceeded(numStr)) return toExponentialExpr(numStr);
+export function toNumberFormattedForDisplay(numStr){
+
+  if (isRealValueInteger(numStr)) return numStr.replace(/\.0*$/, '');
+
+  if (isLengthOverOnDisplay(numStr)) return toExponentialExpr(numStr);
+
   return numStr;
 }
 
 // 정수 판별
-export function isInteger(numStr) {
+export function isRealValueInteger(numStr) {
+
   if (/^\d+\.?0*$/.test(numStr)) return true;
+  
   return false;
 }
 
 // 소수 판별
-export function isRationalDiffIntegerNumber(numStr) {
+export function isDecimalFormat(numStr) {
+  
   if (/\./.test(numStr)) return true;
+  
   return false;
 }
 
 // stack의 [num op num] 형식의 값 계산
 export function calcNumOpNumSeq(list) {
+
   const [num1, operator, num2] = list;
 
   /**
@@ -36,8 +45,11 @@ export function calcNumOpNumSeq(list) {
    * if 구문 사용해 평가
    **/
 
-  if (Keypad.SUM.equalTo(operator.type)) return Big(num1.content).plus(num2.content).toString();
-  if (Keypad.SUBTRACT.equalTo(operator.type)) return Big(num1.content).minus(num2.content).toString();
-  if (Keypad.MULTIPLY.equalTo(operator.type)) return Big(num1.content).times(num2.content).toString();
-  if (Keypad.DIVIDE.equalTo(operator.type)) return Big(num1.content).div(num2.content).toString();
+  if (KeypadSet.SUM.equalTo(operator.type)) return Big(num1.content).plus(num2.content).toString();
+
+  if (KeypadSet.SUBTRACT.equalTo(operator.type)) return Big(num1.content).minus(num2.content).toString();
+
+  if (KeypadSet.MULTIPLY.equalTo(operator.type)) return Big(num1.content).times(num2.content).toString();
+
+  if (KeypadSet.DIVIDE.equalTo(operator.type)) return Big(num1.content).div(num2.content).toString();
 }

@@ -1,56 +1,61 @@
 import { computed } from 'vue';
 import { useStore } from 'vuex';
 
-import Keypad from '@/constants/calculator/Keypad';
+import KeypadSet from '@/constants/calculator/KeypadSet';
 import CalculatorToken from '@/class/calculator/CalculatorToken';
-import { isLengthExceeded } from '@/utils/calculatorUtils';
+import { isLengthOverOnDisplay } from '@/utils/calculatorUtils';
 
 function usePadInput() {
+
   const store = useStore();
+
   const number = computed(() => store.state.calculator.number);
   const numberEditMode = computed(() => store.state.calculator.numberEditMode);
   const arithmeticError = computed(() => store.state.calculator.error);
 
   const handleKeypadInput = (padInput) => {
+    
     if (arithmeticError.value.hasError) {
       store.commit('calculator/unsetError');
     }
 
     // 숫자
-    if (Keypad.NUMBER.equalTo(padInput.parent)) {
-      if (numberEditMode.value === 'append' && isLengthExceeded(number.value + padInput.html)) return;
+    if (KeypadSet.NUMBER.equalTo(padInput.parent)) {
+      
+      const nextNumber = number.value + padInput.html;
+      // 입력할 수 있는 최대 길이를 넘었을 때 입력 방지
+      if (numberEditMode.value === 'append' && isLengthOverOnDisplay(nextNumber)) return;
 
       store.dispatch(
         'calculator/combineDigit',
         new CalculatorToken({
-          type: Keypad.NUMBER,
+          type: KeypadSet.NUMBER,
           content: padInput.html,
         })
       );
+
       return;
     }
     
     // .
-    if (Keypad.DOT.equalTo(padInput)) {
-      store.dispatch('calculator/handleDot', {
-        numberToken: new CalculatorToken({
-          type: Keypad.NUMBER,
-          content: number.value,
-        }),
-      });
+    if (KeypadSet.DOT.equalTo(padInput)) {
+      store.dispatch('calculator/handleDot');
+
+      return;
     }
 
     // negate
-    if (Keypad.NEGATE.equalTo(padInput)) {
+    if (KeypadSet.NEGATE.equalTo(padInput)) {
       store.dispatch('calculator/handleNegate');
+
       return;
     }
 
     // operator
-    if (Keypad.OPERATOR.equalTo(padInput.parent)) {
+    if (KeypadSet.OPERATOR.equalTo(padInput.parent)) {
       store.dispatch('calculator/handleOperator', {
         numberToken: new CalculatorToken({
-          type: Keypad.NUMBER,
+          type: KeypadSet.NUMBER,
           content: number.value,
         }),
         operatorToken: new CalculatorToken({
@@ -58,14 +63,15 @@ function usePadInput() {
           content: padInput.html,
         }),
       });
+
       return;
     }
 
     // =
-    if (Keypad.EQUAL.equalTo(padInput)) {
+    if (KeypadSet.EQUAL.equalTo(padInput)) {
       store.dispatch('calculator/handleEqual', {
         numberToken: new CalculatorToken({
-          type: Keypad.NUMBER,
+          type: KeypadSet.NUMBER,
           content: number.value,
         }),
         operatorToken: new CalculatorToken({
@@ -73,11 +79,12 @@ function usePadInput() {
           content: padInput.html,
         }),
       });
+
       return;
     }
 
     // 삭제 3개
-    if (Keypad.CLEAR.equalTo(padInput.parent)) {
+    if (KeypadSet.CLEAR.equalTo(padInput.parent)) {
       store.dispatch(
         'calculator/handleClear',
         new CalculatorToken({
@@ -85,6 +92,8 @@ function usePadInput() {
           content: padInput.html,
         })
       );
+
+      return;
     }
   };
 
