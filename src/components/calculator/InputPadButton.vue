@@ -2,7 +2,7 @@
   <template v-if="props.keypad.img">
     <button
       ref="buttonRef"
-      class="input-pad-button"
+      :class="classObject"
       @click="onKeypadClick"
     >
       <img
@@ -14,7 +14,7 @@
   <template v-else>
     <button
       ref="buttonRef"
-      class="input-pad-button"
+      :class="classObject"
       @click="onKeypadClick"
       v-html="props.keypad.html"
     />
@@ -25,7 +25,6 @@
 import Keypad from '@/class/calculator/Keypad';
 import CalculatorColors from '@/constants/color/CalculatorColors';
 import { computed, ref } from '@vue/reactivity';
-import { watch } from '@vue/runtime-core';
 
 export default {
   name: 'InputPadButton',
@@ -42,15 +41,21 @@ export default {
         return {};
       },
     },
-    curKeypad:{
+    curKeypad: {
       type: Object,
-      default(){
+      default() {
         return null;
       },
       validator(object) {
         return object instanceof Keypad;
       },
     },
+    isKeyActive: {
+      type: Boolean,
+      default() {
+        return false;
+      }
+    }
   },
   emits: ['click-keypad'],
   setup(props, context) {
@@ -61,13 +66,15 @@ export default {
       context.emit('click-keypad', props.keypad);
     };
 
-    watch(props, () => {
-      
-    });
+    const classObject = computed(() => ({
+      'input-pad-button': true,
+      'active': props.isKeyActive && props.curKeypad.name === props.keypad.name,
+    }));
 
     return {
       props,
       color: CalculatorColors,
+      classObject,
       buttonRef,
       onKeypadClick,
     };
@@ -92,5 +99,7 @@ export default {
   }
 
 }
-
+.active{
+  background-color: v-bind('color.keypad.lightGrey');
+}
 </style>

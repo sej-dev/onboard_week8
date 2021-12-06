@@ -10,6 +10,7 @@
         :key="button.keypad.name"
         v-bind="button"
         :cur-keypad="curKeypad"
+        :is-key-active="isKeyActive"
         @click-keypad="onClickKeypad"
       />
     </div>
@@ -17,7 +18,7 @@
 </template>
 
 <script>
-import { computed, onBeforeUnmount, onMounted } from 'vue';
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
 
 import InputPadButton from '@/components/calculator/InputPadButton.vue';
 
@@ -30,6 +31,7 @@ export default {
   name: 'InputPad',
   components: { InputPadButton },
   setup() {
+    const isKeyActive = ref(false);
     const { handleKeypadInput, curKeypad } = useKeypadInput();
 
     // 입력에 따라 토큰을 생성하고 vuex에 저장
@@ -39,22 +41,31 @@ export default {
 
     const onKeydown = ({ key }) => {
       const keypad = KeyboardSet[key];
-      if (keypad) handleKeypadInput(keypad);
+      if (keypad) {
+        handleKeypadInput(keypad);
+        isKeyActive.value = true;
+      }
+    };
+
+    const onKeyup = () => {
+      isKeyActive.value = false;
     };
 
     onMounted(() => {
       // keydown event 처리
       document.addEventListener('keydown', onKeydown);
+      document.addEventListener('keyup', onKeyup);
     });
 
     onBeforeUnmount(() => {
       document.removeEventListener('keydown', onKeydown);
+      document.addEventListener('keyup', onKeyup);
     });
 
     return {
       buttons,
       curKeypad,
-
+      isKeyActive,
       onClickKeypad,
     };
   },
