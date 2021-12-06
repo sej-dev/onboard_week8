@@ -22,39 +22,41 @@
 <script>
 import Keypad from '@/class/calculator/Keypad';
 import CalculatorColors from '@/constants/color/CalculatorColors';
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
+
+const props = {
+  keypad: {
+    required: true,
+    validator(object) {
+      return object instanceof Keypad;
+    },
+  },
+  style: {
+    type: Object,
+    default() {
+      return {};
+    },
+  },
+  curKeypad: {
+    type: Object,
+    default() {
+      return null;
+    },
+    validator(object) {
+      return object instanceof Keypad;
+    },
+  },
+  isKeyActive: {
+    type: Boolean,
+    default() {
+      return false;
+    }
+  }
+};
 
 export default {
   name: 'InputPadButton',
-  props: {
-    keypad: {
-      required: true,
-      validator(object) {
-        return object instanceof Keypad;
-      },
-    },
-    style: {
-      type: Object,
-      default() {
-        return {};
-      },
-    },
-    curKeypad: {
-      type: Object,
-      default() {
-        return null;
-      },
-      validator(object) {
-        return object instanceof Keypad;
-      },
-    },
-    isKeyActive: {
-      type: Boolean,
-      default() {
-        return false;
-      }
-    }
-  },
+  props,
   emits: ['click-keypad'],
   setup(props, context) {
 
@@ -75,6 +77,8 @@ export default {
     };
   },
 };
+
+
 </script>
 
 <style scoped lang="scss">

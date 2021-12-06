@@ -95,7 +95,6 @@ const actions = {
     if (stack.length === 0) {
       commit('pushStack', numberToken);
       commit('pushStack', operatorToken);
-
       commit('setNumber', toNumberFormattedForDisplay(numberToken.content));
       
       commit('addHistory', {
@@ -267,8 +266,10 @@ const actions = {
       commit('changeNumberEditMode', 'append');
     } 
     else if (numberEditMode === 'append') {
-
-      commit('setNumber', removeZeroPrefix(`${number}${digit}`));
+      
+      let nextNumber = `${number}${digit}`;
+      if(!isDecimalFormat(number)) nextNumber = removeZeroPrefix(nextNumber);
+      commit('setNumber', nextNumber);
     }
   },
 };

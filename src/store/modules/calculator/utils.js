@@ -13,6 +13,8 @@ export function toNumberFormattedForDisplay(numStr){
 
   if (isRealValueInteger(numStr)) return numStr.replace(/\.0*$/, '');
 
+  if (isDecimalFormat(numStr)) numStr = numStr.replace(/0*$/, '');
+  
   if (isLengthOverOnDisplay(numStr)) return toExponentialExpr(numStr);
 
   return numStr;

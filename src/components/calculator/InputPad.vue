@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
+import { onBeforeUnmount, onMounted, ref } from 'vue';
 
 import InputPadButton from '@/components/calculator/InputPadButton.vue';
 
@@ -43,8 +43,8 @@ export default {
       const keypad = KeyboardSet[key];
       
       if (keypad) {
-        handleKeypadInput(keypad);
         isKeyActive.value = true;
+        handleKeypadInput(keypad);
       }
     };
 
