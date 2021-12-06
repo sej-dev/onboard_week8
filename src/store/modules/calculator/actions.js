@@ -41,6 +41,7 @@ const actions = {
       }));
 
       const result = calcNumOpNumSeq(stack.slice());
+      
       commit('addHistory', {
         stack: stack.slice(),
         number: result,
@@ -106,9 +107,7 @@ const actions = {
     
     // [case2] stack: [... =], payload {num, =}
     if (KeypadSet.EQUAL.equalTo(top.type)) {
-      
-      // [case1과 유사] stack: [num1 =], payload: {num2, =}
-      // = 연속 입력
+      // [case2-1] stack: [num1 =], payload: {num2, =}
       // -> stack: [num2 =]
       if (stack.length === 2) {
         commit('replaceStackIndexOf', {
@@ -124,7 +123,7 @@ const actions = {
         return;
       }
 
-      // [case2와 유사] stack: [num1 op num2 =], payload: {num3 =}
+      // [case2-2] stack: [num1 op num2 =], payload: {num3 =}
       // result = num1 op num2 = num3
       // -> stack: [num3 op num2 =]
       if (stack.length === 4) {
@@ -144,7 +143,7 @@ const actions = {
     }
 
     // [case3] stack: [num1 op], payload: {num2, =}
-    if (stack.length === 2) {
+    if (stack.length === 2) {      
       // 0으로 나눌 경우 오류 처리
       if (numberToken.content === '0' && KeypadSet.DIVIDE.equalTo(top.type)) {
         commit('setError', ArithmeticError.DIVIDE_BY_ZERO);

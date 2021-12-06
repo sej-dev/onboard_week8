@@ -21,7 +21,7 @@ const getters = {
     return state.stack.map((token) => token.content).join(' ');
   },
   history(state) {
-    return state.history.reverse().map(({ stack, number }) => ({
+    return state.history.map(({ stack, number }) => ({
       formula: stack.map((token) => token.content).join(' '),
       result: number,
     }));

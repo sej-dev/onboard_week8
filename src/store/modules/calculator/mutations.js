@@ -28,7 +28,7 @@ const mutations = {
     state.numberEditMode = payload;
   },
   addHistory(state, payload) {
-    state.history.push(payload);
+    state.history.unshift(payload);
   },
 
   setError(state, payload) {
