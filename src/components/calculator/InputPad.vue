@@ -41,6 +41,7 @@ export default {
 
     const onKeydown = ({ key }) => {
       const keypad = KeyboardSet[key];
+      
       if (keypad) {
         handleKeypadInput(keypad);
         isKeyActive.value = true;

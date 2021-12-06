@@ -108,11 +108,16 @@ const actions = {
     // [case2] stack: [... =], payload {num, =}
     if (KeypadSet.EQUAL.equalTo(top.type)) {
       
-      // [case1과 유사] stack: [num =], payload: {num, =}
+      // [case1과 유사] stack: [num1 =], payload: {num2, =}
       // = 연속 입력
-      // -> stack: [num =]
+      // -> stack: [num2 =]
       if (stack.length === 2) {
-        //commit('setNumber', toNumberFormattedForDisplay(stack[lastIdx - 1].content));
+        commit('replaceStackIndexOf', {
+          index: 0,
+          token: numberToken,
+        });
+        commit('setNumber', toNumberFormattedForDisplay(numberToken.content));
+        
         commit('addHistory', {
           stack: stack.slice(),
           number: state.number,
@@ -167,7 +172,7 @@ const actions = {
   // +/- 부호 변환
   handleNegate({ commit, state }) {
     
-    const { number } = state;
+    const { number, stack } = state;
 
     if (number === '0') return;
 

@@ -1,7 +1,6 @@
 <template>
   <template v-if="props.keypad.img">
     <button
-      ref="buttonRef"
       :class="classObject"
       @click="onKeypadClick"
     >
@@ -13,7 +12,6 @@
   </template>
   <template v-else>
     <button
-      ref="buttonRef"
       :class="classObject"
       @click="onKeypadClick"
       v-html="props.keypad.html"
@@ -24,7 +22,7 @@
 <script>
 import Keypad from '@/class/calculator/Keypad';
 import CalculatorColors from '@/constants/color/CalculatorColors';
-import { computed, ref } from '@vue/reactivity';
+import { computed, ref } from 'vue';
 
 export default {
   name: 'InputPadButton',
@@ -60,8 +58,6 @@ export default {
   emits: ['click-keypad'],
   setup(props, context) {
 
-    const buttonRef = ref(null);
-
     const onKeypadClick = () => {
       context.emit('click-keypad', props.keypad);
     };
@@ -75,7 +71,6 @@ export default {
       props,
       color: CalculatorColors,
       classObject,
-      buttonRef,
       onKeypadClick,
     };
   },
